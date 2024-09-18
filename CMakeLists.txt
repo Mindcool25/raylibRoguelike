@@ -25,6 +25,8 @@ add_executable(
   src/utils/vec2.cpp
   src/tile/tile.cpp
   src/entity/entity.cpp
+  src/entity/player/player.cpp
+  src/entity/enemy/enemy.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)

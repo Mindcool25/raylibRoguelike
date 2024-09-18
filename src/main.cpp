@@ -1,7 +1,10 @@
+#include "entity/enemy/enemy.hpp"
 #include "raylib.h"
 #include "map/map.hpp"
 #include "utils/vec2.hpp"
 #include "entity/entity.hpp"
+#include "entity/player/player.hpp"
+#include "entity/enemy/enemy.hpp"
 
 #include <iostream>
 
@@ -15,6 +18,10 @@ void draw() {
 
 void update() {
     return;
+}
+
+bool isShiftDown() {
+    return IsKeyDown(KEY_LEFT_SHIFT);
 }
 
 
@@ -40,15 +47,20 @@ int main() {
             }
         }
     }
-    Entity* e = new Entity(GREEN, Vec2(3,3));
-
-    m.setEntity(e);
+    Entity* e = new EnemyEntity;
+    Entity* p = new PlayerEntity(GREEN, Vec2(0,0), 324);
+    m.placeEntity(p, Vec2(8,8));
+    m.placeEntity(e, Vec2(4,4));
 
     while (!WindowShouldClose()) {
         update();
+        p->move(&m);
+        if (e != NULL) {
+            e->move(&m);
+        }
         BeginDrawing();
         draw();
-        m.render(5);
+        m.render(10);
         EndDrawing();
     }
 

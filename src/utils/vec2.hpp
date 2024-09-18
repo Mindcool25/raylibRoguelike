@@ -14,9 +14,11 @@ class Vec2 {
 
         Vec2(int x, int y) : x(x), y(y) {}
 
-        Vector2 vector();
+        void vector();
 
         bool operator==(const Vec2& other) const;
+        Vec2& operator+=(const Vec2& rhs);
+        friend Vec2 operator+(Vec2 lhs, const Vec2& rhs);
 };
 
 struct VecHash {

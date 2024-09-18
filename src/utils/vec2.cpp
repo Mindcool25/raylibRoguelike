@@ -1,4 +1,5 @@
 #include "vec2.hpp"
+#include "raylib.h"
 
 // Stuff to make the vec2 class hashable
 bool Vec2::operator==(const Vec2& other) const {
@@ -9,8 +10,16 @@ size_t VecHash::operator()(const Vec2& p) const {
     return std::hash<int>()(p.x) ^ std::hash<int>()(p.y);
 }
 
-Vector2 Vec2::vector() {
-    return Vector2(this->x, this->y);
+Vec2& Vec2::operator+=(const Vec2& rhs) {
+    this->x += rhs.x;
+    this->y += rhs.y;
+    return *this;
+}
+
+Vec2 operator+(Vec2 lhs, const Vec2& rhs) {
+    lhs.x += rhs.x;
+    lhs.y += rhs.y;
+    return lhs;
 }
 
 Vec2::Vec2() {

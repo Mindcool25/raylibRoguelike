@@ -29,10 +29,7 @@ void BSP::generate(Vec2 screensize) {
 }
 
 void BSP::generate(bsp::Node* parent, int iteration, bool dir) {
-    std::cout << "COORDS: " << parent->position.x << "," << parent->position.y << std::endl;
-    std::cout << "SIZE: " << parent->size.x << "," << parent->size.y << std::endl;
     if (iteration == 0) {
-        std::cout << "at the end" << std::endl;
         return;
     } else {
         bsp::Node* n1 = new bsp::Node();
@@ -76,12 +73,8 @@ void BSP::render() {
 }
 
 void BSP::render(bsp::Node* child) {
-    std::cout << "COORDS: " << child->position.x << "," << child->position.y << std::endl;
-    std::cout << "SIZE: " << child->size.x << "," << child->size.y << std::endl;
     if (child->smallest) {
-        DrawRectangleV(child->position.vector(), child->size.vector(), ColorFromHSV(GetRandomValue(100, 355), 64, 100));
     } else {
-        DrawRectangleV(child->position.vector(), child->size.vector(), ColorFromHSV(GetRandomValue(100, 355), 64, 100));
         this->render(child->child1);
         this->render(child->child2);
     }

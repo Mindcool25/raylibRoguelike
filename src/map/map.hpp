@@ -16,6 +16,11 @@ class Map {
         ~Map();
 
         void setEntity(Entity* e);
+        void placeEntity(Entity* e, Vec2 pos);
+        void clearEntity(Vec2 pos);
+
+        Tile* getTile(Vec2 pos);
+        void hitEntity(Vec2 pos, int val);
 
         void setWall(Vec2 pos);
         void setFloor(Vec2 pos);

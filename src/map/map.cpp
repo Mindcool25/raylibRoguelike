@@ -35,7 +35,6 @@ void Map::render(int tile_size) const {
         Color color = WHITE;
         if (curr.entity != nullptr) {
             color = curr.entity->disp;
-            std::cout << "E";
         }
         else if (!curr.walkable) {
             color = RED;
@@ -49,15 +48,57 @@ void Map::render(int tile_size) const {
 
 void Map::setEntity(Entity* e) {
     if (auto search = this->tiles.find(e->pos); search !=this->tiles.end()) {
-        Tile tile = search->second;
-        tile.entity = e;
+        Tile* tile = &search->second;
+        tile->entity = e;
+    }
+}
+
+void Map::placeEntity(Entity *e, Vec2 pos) {
+    if (auto search = this->tiles.find(pos); search !=this->tiles.end()) {
+        Tile* tile = &search->second;
+        e->pos = pos;
+        tile->entity = e;
+    }
+}
+
+void Map::clearEntity(Vec2 pos) {
+    if (auto search = this->tiles.find(pos); search !=this->tiles.end()) {
+        Tile* tile = &search->second;
+        tile->entity = nullptr;
     }
 }
 
 bool Map::tryMove(Vec2 pos) {
     if (auto search = this->tiles.find(pos); search !=this->tiles.end()) {
-        Tile tile = search->second;
-        return tile.isOpen();
+        Tile* tile = &search->second;
+        return tile->isOpen();
     }
-    return true;
+    return false;
+}
+
+Tile* Map::getTile(Vec2 pos) {
+    if (auto search = this->tiles.find(pos); search !=this->tiles.end()) {
+        Tile* tile = &search->second;
+        return tile;
+    }
+    else {
+        return nullptr;
+    }
+
+}
+
+void Map::hitEntity(Vec2 pos, int val) {
+    if (auto search = this->tiles.find(pos); search !=this->tiles.end()) {
+        Entity* e = search->second.entity;
+        if (e == nullptr) {
+            return;
+        }
+        e->damage(val);
+        if (e->health <= 0) {
+            this->clearEntity(pos);
+        }
+    }
+    else {
+    }
+
 }
