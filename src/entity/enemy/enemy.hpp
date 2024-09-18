@@ -1,0 +1,14 @@
+#ifndef ENEMY_HPP_
+#define ENEMY_HPP_
+
+#include "../entity.hpp"
+#include "../../map/map.hpp"
+
+class EnemyEntity: public Entity {
+    public:
+        EnemyEntity(Color disp = PURPLE, Vec2 pos = Vec2(0,0), int health = 10);
+
+        void move(Map* map) override;
+};
+
+#endif // ENEMY_HPP_
