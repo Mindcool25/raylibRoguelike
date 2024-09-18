@@ -20,7 +20,12 @@ add_subdirectory(libs/raylib)
 
 add_executable(
   ${PROJECT_NAME}
-  src/main.cpp)
+  src/main.cpp
+  src/map/map.cpp
+  src/utils/vec2.cpp
+  src/tile/tile.cpp
+  src/entity/entity.cpp
+)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
