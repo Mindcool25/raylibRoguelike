@@ -29,11 +29,14 @@ Vec2 PlayerEntity::move(Map* map) {
 
 
     if (mov != Vec2(0,0)) {
-        std::cout << mov.x << ", " << mov.y << std::endl;
         Vec2 newPos = mov + this->pos;
-        if (map->tryMove(newPos)) {
-            std::cout << "CAN MOVE???" << std::endl;
-            return newPos;
+        if (Tile* curr = map->getTile(newPos); curr != nullptr)  {
+            if (curr->isOpen()) {
+                return newPos;
+            } else if (curr->entity != nullptr) {
+                // React to the entity
+                curr->entity->damage(1);
+            }
         }
     }
     return this->pos;

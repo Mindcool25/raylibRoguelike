@@ -1,5 +1,6 @@
 #include "map.hpp"
 #include <iostream>
+#include <string>
 
 Map::~Map() {
 }
@@ -63,7 +64,7 @@ void Map::placeEntity(std::shared_ptr<Entity> e, Vec2 pos) {
 void Map::clearEntity(Vec2 pos) {
     if (auto search = this->tiles.find(pos); search !=this->tiles.end()) {
         Tile* tile = &search->second;
-        tile->entity = nullptr;
+        tile->entity.reset();
     }
 }
 
@@ -86,27 +87,24 @@ Tile* Map::getTile(Vec2 pos) {
 
 }
 
-void Map::hitEntity(Vec2 pos, int val) {
-    if (auto search = this->tiles.find(pos); search !=this->tiles.end()) {
-        std::shared_ptr<Entity> e = search->second.entity;
-        if (e == nullptr) {
-            return;
-        }
-        e->damage(val);
-        if (e->health <= 0) {
-            this->clearEntity(pos);
-        }
-    }
-    else {
-    }
-
-}
-
 void Map::runActors() {
+    std::vector<std::shared_ptr<Entity>> remove;
+
+    // Check if entity is alive, then move. If dead, add it to a vector to be erased
     for (auto i : actors) {
-        Vec2 iPos = i->move(this);
-        this->getTile(i->pos)->entity = nullptr;
-        i->pos = iPos;
-        this->getTile(iPos)->entity = i;
+        if (i->health <= 0) {
+            remove.push_back(i);
+        } else {
+            Vec2 iPos = i->move(this);
+            this->getTile(i->pos)->entity = nullptr;
+            i->pos = iPos;
+            this->getTile(iPos)->entity = i;
+        }
+    }
+
+    // Remove entity from the tile, then remove it from the actors vector
+    for (auto j : remove) {
+        this->clearEntity(j->pos);
+        std::erase(this->actors, j);
     }
 }

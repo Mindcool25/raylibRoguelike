@@ -32,41 +32,42 @@ int main() {
 
 
     // Setup here
+    // TODO: move map gen into the map class
     Map m(Vec2(800, 800));
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j ++) {
-            if (i == 0 || i == 9) {
+    int x_size = 50;
+    int y_size = 20;
+    for (int i = 0; i < y_size; i++) {
+        for (int j = 0; j < x_size; j ++) {
+            if (i == 0 || i == y_size - 1) {
                 m.setWall(Vec2(i, j));
             }
             else {
-                if (j == 0 || j == 9) {
+                if (j == 0 || j == x_size - 1) {
                     m.setWall(Vec2(i, j));
                 }
                 else {
-                    m.setFloor(Vec2(i, j));
+                    if (GetRandomValue(0, 5) == 1) {
+                        m.setWall(Vec2(i, j));
+                    } else {
+                        m.setFloor(Vec2(i, j));
+                    }
                 }
             }
         }
     }
-    auto ePtr = std::make_shared<Entity>();
-    auto pPtr = std::make_shared<Entity>();
-    auto playerPtr = std::make_shared<PlayerEntity>(PlayerEntity(GREEN, Vec2(1,1), 20));
-    auto enemyPtr = std::make_shared<EnemyEntity>(EnemyEntity(VIOLET, Vec2(9,9), 13));
 
     // Probably the better way to do this
-    std::shared_ptr<Entity> testing = std::make_shared<EnemyEntity>(EnemyEntity(PINK, Vec2(2,2), 100));
-    ePtr = std::static_pointer_cast<Entity>(enemyPtr);
-    pPtr = std::static_pointer_cast<Entity>(playerPtr);
-    std::cout << ePtr->health << std::endl;
-    std::cout << pPtr->health << std::endl;
-    std::cout << testing->health << std::endl;
+    std::shared_ptr<Entity> enemy = std::make_shared<EnemyEntity>(EnemyEntity(PINK, Vec2(2,2), 10));
+    std::shared_ptr<Entity> player = std::make_shared<PlayerEntity>(PlayerEntity(GREEN, Vec2(2,3), 13));
 
-    m.actors.push_back(ePtr);
-    m.actors.push_back(pPtr);
-    m.actors.push_back(testing);
+    m.actors.push_back(enemy);
+    m.actors.push_back(player);
 
-    m.setEntity(ePtr);
-    m.setEntity(pPtr);
+    m.setEntity(enemy);
+    m.setEntity(player);
+
+    enemy.reset();
+    player.reset();
 
     while (!WindowShouldClose()) {
         update();
