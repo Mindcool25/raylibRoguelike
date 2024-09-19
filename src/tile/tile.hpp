@@ -2,13 +2,15 @@
 #define TILE_HPP_
 
 #include <vector>
+#include <memory>
 
 #include "../entity/entity.hpp"
+#include "raylib.h"
 
 class Tile {
     public:
         bool walkable;
-        Entity* entity = nullptr;
+        std::shared_ptr<Entity> entity = nullptr;
         std::vector<int> items;
 
         bool isOpen();

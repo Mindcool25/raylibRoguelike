@@ -46,17 +46,16 @@ void Map::render(int tile_size) const {
     }
 }
 
-void Map::setEntity(Entity* e) {
+void Map::setEntity(std::shared_ptr<Entity> e) {
     if (auto search = this->tiles.find(e->pos); search !=this->tiles.end()) {
         Tile* tile = &search->second;
         tile->entity = e;
     }
 }
 
-void Map::placeEntity(Entity *e, Vec2 pos) {
+void Map::placeEntity(std::shared_ptr<Entity> e, Vec2 pos) {
     if (auto search = this->tiles.find(pos); search !=this->tiles.end()) {
         Tile* tile = &search->second;
-        e->pos = pos;
         tile->entity = e;
     }
 }
@@ -89,7 +88,7 @@ Tile* Map::getTile(Vec2 pos) {
 
 void Map::hitEntity(Vec2 pos, int val) {
     if (auto search = this->tiles.find(pos); search !=this->tiles.end()) {
-        Entity* e = search->second.entity;
+        std::shared_ptr<Entity> e = search->second.entity;
         if (e == nullptr) {
             return;
         }
@@ -101,4 +100,13 @@ void Map::hitEntity(Vec2 pos, int val) {
     else {
     }
 
+}
+
+void Map::runActors() {
+    for (auto i : actors) {
+        Vec2 iPos = i->move(this);
+        this->getTile(i->pos)->entity = nullptr;
+        i->pos = iPos;
+        this->getTile(iPos)->entity = i;
+    }
 }

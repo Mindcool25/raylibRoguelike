@@ -7,6 +7,7 @@
 #include "entity/enemy/enemy.hpp"
 
 #include <iostream>
+#include <memory>
 
 constexpr auto SCREEN_WIDTH = 800;
 constexpr auto SCREEN_HEIGHT = 800;
@@ -47,17 +48,29 @@ int main() {
             }
         }
     }
-    Entity* e = new EnemyEntity;
-    Entity* p = new PlayerEntity(GREEN, Vec2(0,0), 324);
-    m.placeEntity(p, Vec2(8,8));
-    m.placeEntity(e, Vec2(4,4));
+    auto ePtr = std::make_shared<Entity>();
+    auto pPtr = std::make_shared<Entity>();
+    auto playerPtr = std::make_shared<PlayerEntity>(PlayerEntity(GREEN, Vec2(1,1), 20));
+    auto enemyPtr = std::make_shared<EnemyEntity>(EnemyEntity(VIOLET, Vec2(9,9), 13));
+
+    // Probably the better way to do this
+    std::shared_ptr<Entity> testing = std::make_shared<EnemyEntity>(EnemyEntity(PINK, Vec2(2,2), 100));
+    ePtr = std::static_pointer_cast<Entity>(enemyPtr);
+    pPtr = std::static_pointer_cast<Entity>(playerPtr);
+    std::cout << ePtr->health << std::endl;
+    std::cout << pPtr->health << std::endl;
+    std::cout << testing->health << std::endl;
+
+    m.actors.push_back(ePtr);
+    m.actors.push_back(pPtr);
+    m.actors.push_back(testing);
+
+    m.setEntity(ePtr);
+    m.setEntity(pPtr);
 
     while (!WindowShouldClose()) {
         update();
-        p->move(&m);
-        if (e != NULL) {
-            e->move(&m);
-        }
+        m.runActors();
         BeginDrawing();
         draw();
         m.render(10);

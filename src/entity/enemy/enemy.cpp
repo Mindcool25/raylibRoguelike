@@ -7,10 +7,10 @@ EnemyEntity::EnemyEntity(Color disp, Vec2 pos, int health) {
     this->health = health;
 }
 
-void EnemyEntity::move(Map* map) {
-    if (this->health <= 0) {
-        std::cout << "Enemy down" << std::endl;
+Vec2 EnemyEntity::move(Map* map) {
+    if (this->health <= 0 && alive) {
         map->clearEntity(this->pos);
+        alive = !alive;
     }
-    return;
+    return this->pos;
 }

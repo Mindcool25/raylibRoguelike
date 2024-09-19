@@ -8,8 +8,8 @@ Entity::Entity(Color color,  Vec2 pos, int health) {
     this->health = health;
 }
 
-void Entity::move(Map* map) {
-    return;
+Vec2 Entity::move(Map* map) {
+    return Vec2(0,0);
 };
 
 void Entity::damage(int value){

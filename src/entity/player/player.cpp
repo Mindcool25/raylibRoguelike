@@ -9,7 +9,7 @@ PlayerEntity::PlayerEntity(Color disp, Vec2 pos, int health) {
     this->health = health;
 }
 
-void PlayerEntity::move(Map* map) {
+Vec2 PlayerEntity::move(Map* map) {
     // Starting position (no move)
     Vec2 mov = Vec2(0,0);
     // Get controls
@@ -26,19 +26,15 @@ void PlayerEntity::move(Map* map) {
         case KEY_N: mov = Vec2(1, 1); break;
         case KEY_U: mov = Vec2(1, -1); break;
     }
+
+
     if (mov != Vec2(0,0)) {
-        Vec2 newPos = this->pos + mov;
+        std::cout << mov.x << ", " << mov.y << std::endl;
+        Vec2 newPos = mov + this->pos;
         if (map->tryMove(newPos)) {
-            map->clearEntity(this->pos);
-            this->pos = newPos;
-            map->setEntity(this);
-        }
-        else {
-            Tile* tile = map->getTile(newPos);
-            if (tile->entity != nullptr) {
-                tile->entity->damage(1);
-                std::cout << "bumping H: " << tile->entity->health << std::endl;
-            }
+            std::cout << "CAN MOVE???" << std::endl;
+            return newPos;
         }
     }
+    return this->pos;
 }

@@ -1,22 +1,28 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
+#include <memory>
+#include <vector>
 #include <unordered_map>
 #include "../utils/vec2.hpp"
 #include "../tile/tile.hpp"
 #include "../entity/entity.hpp"
+#include "raylib.h"
 
 
 class Map {
     public:
         Vec2 map_size = Vec2(1, 1);
 
+        std::vector<std::shared_ptr<Entity>> actors;
+        void runActors();
+
         Map(Vec2 size);
         Map();
         ~Map();
 
-        void setEntity(Entity* e);
-        void placeEntity(Entity* e, Vec2 pos);
+        void setEntity(std::shared_ptr<Entity> e);
+        void placeEntity(std::shared_ptr<Entity> e, Vec2 pos);
         void clearEntity(Vec2 pos);
 
         Tile* getTile(Vec2 pos);

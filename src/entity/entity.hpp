@@ -8,14 +8,16 @@ class Map;
 
 class Entity {
     public:
+        virtual ~Entity() = default;
         Entity(Color color = BLACK, Vec2 pos = Vec2(0,0), int health = 3);
+        bool alive = true;
 
         Color disp;
         Vec2 pos;
         int health;
 
         virtual void damage(int value);
-        virtual void move(Map* map);
+        virtual Vec2 move(Map* map);
         int attack();
 };
 

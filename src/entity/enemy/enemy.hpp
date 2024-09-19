@@ -6,9 +6,10 @@
 
 class EnemyEntity: public Entity {
     public:
+        ~EnemyEntity() = default;
         EnemyEntity(Color disp = PURPLE, Vec2 pos = Vec2(0,0), int health = 10);
 
-        void move(Map* map) override;
+        Vec2 move(Map* map) override;
 };
 
 #endif // ENEMY_HPP_
