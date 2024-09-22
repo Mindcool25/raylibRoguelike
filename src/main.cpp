@@ -67,6 +67,8 @@ int main() {
     m.setEntity(player);
 
 
+    // Schedule 100 moves
+    // TODO: figure out how to make entities schedule themselves somehow
     for (int i = 0; i < 100; i++) {
         if (i%2 == 0) {
             m.schedule.scheduleEvent(i, player);
@@ -76,9 +78,11 @@ int main() {
         }
     }
 
+    // Get rid of the shared pointers we don't need
     enemy.reset();
     player.reset();
 
+    // Main game loop
     while (!WindowShouldClose()) {
         update();
         m.runActors();
