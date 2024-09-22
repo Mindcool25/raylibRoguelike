@@ -9,10 +9,6 @@ Map::Map(Vec2 size) {
     this->map_size = size;
 }
 
-bool Map::isWall(Vec2 pos) const {
-    return (this->tiles.contains(pos) && !this->tiles.at(pos).walkable);
-}
-
 void Map::setWall(Vec2 pos) {
     Tile newWall;
     newWall.walkable = false;
@@ -44,32 +40,34 @@ void Map::render(int tile_size) const {
 }
 
 void Map::setEntity(std::shared_ptr<Entity> e) {
-    if (auto search = this->tiles.find(e->pos); search !=this->tiles.end()) {
-        Tile* tile = &search->second;
+    Tile* tile = this->getTile(e->pos);
+    if (tile != nullptr) {
         tile->entity = e;
     }
 }
 
 void Map::placeEntity(std::shared_ptr<Entity> e, Vec2 pos) {
-    if (auto search = this->tiles.find(pos); search !=this->tiles.end()) {
-        Tile* tile = &search->second;
+    Tile* tile = this->getTile(pos);
+    if (tile != nullptr) {
         tile->entity = e;
     }
 }
 
 void Map::clearEntity(Vec2 pos) {
-    if (auto search = this->tiles.find(pos); search !=this->tiles.end()) {
-        Tile* tile = &search->second;
+    Tile* tile = this->getTile(pos);
+    if (tile != nullptr) {
         tile->entity.reset();
     }
 }
 
 bool Map::tryMove(Vec2 pos) {
-    if (auto search = this->tiles.find(pos); search !=this->tiles.end()) {
-        Tile* tile = &search->second;
+    Tile* tile = this->getTile(pos);
+    if (tile != nullptr) {
         return tile->isOpen();
     }
-    return false;
+    else {
+        return false;
+    }
 }
 
 Tile* Map::getTile(Vec2 pos) {
@@ -93,6 +91,7 @@ void Map::runActors() {
                 remove.push_back(i);
             } else {
                 Vec2 iPos = i->move(this);
+                // Check if the entity actually moved, if it did, move on to next tick
                 if (iPos != i->pos) {
                     this->getTile(i->pos)->entity = nullptr;
                     i->pos = iPos;

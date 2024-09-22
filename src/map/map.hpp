@@ -33,8 +33,6 @@ class Map {
         void setWall(Vec2 pos);
         void setFloor(Vec2 pos);
 
-        bool isWall(Vec2 pos) const;
-
         bool tryMove(Vec2 Pos);
 
         void render(int tile_size) const;
