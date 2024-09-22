@@ -9,10 +9,6 @@ Map::Map(Vec2 size) {
     this->map_size = size;
 }
 
-Map::Map() {
-    this->map_size = Vec2(10, 10);
-}
-
 bool Map::isWall(Vec2 pos) const {
     return (this->tiles.contains(pos) && !this->tiles.at(pos).walkable);
 }
@@ -92,13 +88,18 @@ void Map::runActors() {
 
     // Check if entity is alive, then move. If dead, add it to a vector to be erased
     for (auto i : actors) {
-        if (i->health <= 0) {
-            remove.push_back(i);
-        } else {
-            Vec2 iPos = i->move(this);
-            this->getTile(i->pos)->entity = nullptr;
-            i->pos = iPos;
-            this->getTile(iPos)->entity = i;
+        if (this->schedule.getCurrent() == i) {
+            if (i->health <= 0) {
+                remove.push_back(i);
+            } else {
+                Vec2 iPos = i->move(this);
+                if (iPos != i->pos) {
+                    this->getTile(i->pos)->entity = nullptr;
+                    i->pos = iPos;
+                    this->getTile(iPos)->entity = i;
+                    this->schedule.tick += 1;
+                }
+            }
         }
     }
 

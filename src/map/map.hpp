@@ -13,12 +13,13 @@
 
 class Map {
     public:
-        Map(Vec2 size);
-        Map();
+        Map(Vec2 size = Vec2(10,10));
         ~Map();
 
         Vec2 map_size = Vec2(1, 1);
 
+
+        Scheduler schedule;
         std::vector<std::shared_ptr<Entity>> actors;
 
         void runActors();

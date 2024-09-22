@@ -66,6 +66,16 @@ int main() {
     m.setEntity(enemy);
     m.setEntity(player);
 
+
+    for (int i = 0; i < 100; i++) {
+        if (i%2 == 0) {
+            m.schedule.scheduleEvent(i, player);
+        }
+        else {
+            m.schedule.scheduleEvent(i, enemy);
+        }
+    }
+
     enemy.reset();
     player.reset();
 
