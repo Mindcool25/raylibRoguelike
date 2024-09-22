@@ -7,20 +7,21 @@
 #include "../utils/vec2.hpp"
 #include "../tile/tile.hpp"
 #include "../entity/entity.hpp"
+#include "../scheduler/scheduler.hpp"
 #include "raylib.h"
 
 
 class Map {
     public:
-        Vec2 map_size = Vec2(1, 1);
-
-        std::vector<std::shared_ptr<Entity>> actors;
-        void runActors();
-
         Map(Vec2 size);
         Map();
         ~Map();
 
+        Vec2 map_size = Vec2(1, 1);
+
+        std::vector<std::shared_ptr<Entity>> actors;
+
+        void runActors();
         void setEntity(std::shared_ptr<Entity> e);
         void placeEntity(std::shared_ptr<Entity> e, Vec2 pos);
         void clearEntity(Vec2 pos);
