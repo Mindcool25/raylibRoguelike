@@ -1,4 +1,3 @@
-#include "entity/enemy/enemy.hpp"
 #include "raylib.h"
 #include "map/map.hpp"
 #include "utils/vec2.hpp"
@@ -37,28 +36,7 @@ int main() {
 
     // Setup here
     // TODO: move map gen into the map class
-    Map m(Vec2(800, 800));
-    int x_size = 50;
-    int y_size = 20;
-    for (int i = 0; i < y_size; i++) {
-        for (int j = 0; j < x_size; j ++) {
-            if (i == 0 || i == y_size - 1) {
-                m.setWall(Vec2(i, j));
-            }
-            else {
-                if (j == 0 || j == x_size - 1) {
-                    m.setWall(Vec2(i, j));
-                }
-                else {
-                    if (GetRandomValue(0, 5) == 1) {
-                        m.setWall(Vec2(i, j));
-                    } else {
-                        m.setFloor(Vec2(i, j));
-                    }
-                }
-            }
-        }
-    }
+    Map m(Vec2(80, 80));
 
     // Probably the better way to do this
     std::shared_ptr<Entity> enemy = std::make_shared<EnemyEntity>(EnemyEntity(PINK, Vec2(2,2), 10));

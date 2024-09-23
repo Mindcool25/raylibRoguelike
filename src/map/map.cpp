@@ -7,6 +7,27 @@ Map::~Map() {
 
 Map::Map(Vec2 size) {
     this->map_size = size;
+
+    // NOTE: this is where map gen will happen
+    for (int i = 0; i < map_size.y; i++) {
+        for (int j = 0; j < map_size.x; j ++) {
+            if (i == 0 || i == map_size.y - 1) {
+                setWall(Vec2(i, j));
+            }
+            else {
+                if (j == 0 || j == map_size.x - 1) {
+                    setWall(Vec2(i, j));
+                }
+                else {
+                    if (GetRandomValue(0, 5) == 1) {
+                        setWall(Vec2(i, j));
+                    } else {
+                        setFloor(Vec2(i, j));
+                    }
+                }
+            }
+        }
+    }
 }
 
 void Map::setWall(Vec2 pos) {
