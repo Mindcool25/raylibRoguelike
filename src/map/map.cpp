@@ -18,10 +18,11 @@ void Map::setWall(Vec2 pos) {
 void Map::setFloor(Vec2 pos) {
     Tile newFloor;
     newFloor.walkable = true;
-    this->tiles.insert_or_assign(pos, newFloor);
-}
+    this->tiles.insert_or_assign(pos, newFloor);}
 
 
+// TODO: This should be changed eventually to use ASCII rather than
+//       colored squares.
 void Map::render(int tile_size) const {
     for (auto t = this->tiles.begin(); t != this->tiles.end(); t++) {
         Tile curr = t->second;
@@ -81,6 +82,9 @@ Tile* Map::getTile(Vec2 pos) {
 
 }
 
+// TODO: Make sure to rewrite this with the main game object
+//       Probably make the game object control the entity turns
+//       Map doesn't need to bother with entities
 void Map::runActors() {
     std::vector<std::shared_ptr<Entity>> remove;
 
@@ -89,6 +93,7 @@ void Map::runActors() {
         if (this->schedule.getCurrent() == i) {
             if (i->health <= 0) {
                 remove.push_back(i);
+                i.reset();
             } else {
                 Vec2 iPos = i->move(this);
                 // Check if the entity actually moved, if it did, move on to next tick
@@ -105,6 +110,7 @@ void Map::runActors() {
     // Remove entity from the tile, then remove it from the actors vector
     for (auto j : remove) {
         this->clearEntity(j->pos);
+        this->schedule.removeEntity(j);
         std::erase(this->actors, j);
     }
 }

@@ -12,6 +12,9 @@ Vec2 Entity::move(Map* map) {
     return Vec2(0,0);
 };
 
+// NOTE: This will need some redoing, mainly with taking damage.
+//       Possibly have a more specific damage input, and a list of
+//       effects to apply.
 void Entity::damage(int value){
     this->health -= value;
     std::cout << this->health << std::endl;
