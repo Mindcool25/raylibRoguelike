@@ -12,6 +12,7 @@ class Scheduler {
         std::shared_ptr<Entity> getCurrent();
 
         void scheduleEvent(int tick, std::shared_ptr<Entity> e);
+        void removeEntity(std::shared_ptr<Entity> e);
 
     private:
         std::map<int, std::shared_ptr<Entity>> schedule;

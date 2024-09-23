@@ -9,6 +9,10 @@
 #include <iostream>
 #include <memory>
 
+// TODO: Rewrite most things to work with a main game object
+// TODO: Implement items, inventories
+// TODO: Change rendering to be done with ASCII rather than colored squares.
+
 constexpr auto SCREEN_WIDTH = 800;
 constexpr auto SCREEN_HEIGHT = 800;
 
