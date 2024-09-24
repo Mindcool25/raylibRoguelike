@@ -10,6 +10,7 @@
 #include <memory>
 
 // DONE: Rewrite most things to work with a main game object
+// TODO: scheduling should use a multimap to allow multiple things happening on one tick.
 // TODO: Rewrite scheduling and entity turns
 // TODO: Implement items, inventories
 // TODO: Change rendering to be done with ASCII rather than colored squares.

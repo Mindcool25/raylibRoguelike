@@ -15,6 +15,10 @@ Game::Game() {
 }
 
 // TODO: this could be rewritten, its a bit hacked together
+// Potential logic:
+//  Get next entity in schedule NOTE: This will be an iterator
+//  Ask entity to take turn until it does
+//  If action is attack, check if attacked entity is dead, if so remove it
 void Game::runEntities() {
     std::vector<std::shared_ptr<Entity>> remove;
     for (auto i : entities) {
