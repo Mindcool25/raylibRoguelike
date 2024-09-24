@@ -22,8 +22,9 @@ add_executable(
   ${PROJECT_NAME}
   src/main.cpp
   src/map/map.cpp
-  src/utils/vec2.cpp
   src/tile/tile.cpp
+  src/game/game.cpp
+  src/utils/vec2.cpp
   src/entity/entity.cpp
   src/entity/enemy/enemy.cpp
   src/scheduler/scheduler.cpp

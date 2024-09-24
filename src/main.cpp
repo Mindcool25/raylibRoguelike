@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "map/map.hpp"
+#include "game/game.hpp"
 #include "utils/vec2.hpp"
 #include "entity/entity.hpp"
 #include "entity/player/player.hpp"
@@ -8,12 +9,10 @@
 #include <iostream>
 #include <memory>
 
-// TODO: Rewrite most things to work with a main game object
+// DONE: Rewrite most things to work with a main game object
+// TODO: Rewrite scheduling and entity turns
 // TODO: Implement items, inventories
 // TODO: Change rendering to be done with ASCII rather than colored squares.
-
-constexpr auto SCREEN_WIDTH = 800;
-constexpr auto SCREEN_HEIGHT = 800;
 
 void draw() {
     ClearBackground(BLACK);
@@ -24,57 +23,29 @@ void update() {
     return;
 }
 
-bool isShiftDown() {
-    return IsKeyDown(KEY_LEFT_SHIFT);
-}
-
-
 int main() {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Raylib Project");
-    SetTargetFPS(60);
-
-
-    // Setup here
-    // TODO: move map gen into the map class
-    Map m(Vec2(80, 80));
-
-    // Probably the better way to do this
+    Game game;
     std::shared_ptr<Entity> enemy = std::make_shared<EnemyEntity>(EnemyEntity(PINK, Vec2(2,2), 10));
     std::shared_ptr<Entity> player = std::make_shared<PlayerEntity>(PlayerEntity(GREEN, Vec2(2,3), 13));
+    game.entities.push_back(enemy);
+    game.entities.push_back(player);
 
-    m.actors.push_back(enemy);
-    m.actors.push_back(player);
+    game.map.setEntity(enemy);
+    game.map.setEntity(player);
 
-    m.setEntity(enemy);
-    m.setEntity(player);
-
-
-    // Schedule 100 moves
-    // TODO: figure out how to make entities schedule themselves somehow
     for (int i = 0; i < 100; i++) {
         if (i%2 == 0) {
-            m.schedule.scheduleEvent(i, player);
+            game.schedule.scheduleEvent(i, player);
         }
         else {
-            m.schedule.scheduleEvent(i, enemy);
+            game.schedule.scheduleEvent(i, enemy);
         }
     }
 
-    // Get rid of the shared pointers we don't need
-    enemy.reset();
     player.reset();
+    enemy.reset();
 
-    // Main game loop
-    while (!WindowShouldClose()) {
-        update();
-        m.runActors();
-        BeginDrawing();
-        draw();
-        m.render(10);
-        EndDrawing();
-    }
-
-    CloseWindow();
+    game.gameLoop();
 
     return 0;
 }
