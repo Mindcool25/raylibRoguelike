@@ -4,7 +4,6 @@
 #include "raylib.h"
 #include "../utils/vec2.hpp"
 
-// TODO: forward decare this better so the default move function can be better
 class Map;
 
 class Entity {

@@ -1,6 +1,4 @@
 #include "map.hpp"
-#include <iostream>
-#include <string>
 
 Map::~Map() {
 }
@@ -68,27 +66,10 @@ void Map::setEntity(std::shared_ptr<Entity> e) {
     }
 }
 
-void Map::placeEntity(std::shared_ptr<Entity> e, Vec2 pos) {
-    Tile* tile = this->getTile(pos);
-    if (tile != nullptr) {
-        tile->entity = e;
-    }
-}
-
 void Map::clearEntity(Vec2 pos) {
     Tile* tile = this->getTile(pos);
     if (tile != nullptr) {
         tile->entity.reset();
-    }
-}
-
-bool Map::tryMove(Vec2 pos) {
-    Tile* tile = this->getTile(pos);
-    if (tile != nullptr) {
-        return tile->isOpen();
-    }
-    else {
-        return false;
     }
 }
 
@@ -101,37 +82,4 @@ Tile* Map::getTile(Vec2 pos) {
         return nullptr;
     }
 
-}
-
-// TODO: Make sure to rewrite this with the main game object
-//       Probably make the game object control the entity turns
-//       Map doesn't need to bother with entities
-void Map::runActors() {
-    std::vector<std::shared_ptr<Entity>> remove;
-
-    // Check if entity is alive, then move. If dead, add it to a vector to be erased
-    for (auto i : actors) {
-        if (this->schedule.getCurrent() == i) {
-            if (i->health <= 0) {
-                remove.push_back(i);
-                i.reset();
-            } else {
-                Vec2 iPos = i->move(this);
-                // Check if the entity actually moved, if it did, move on to next tick
-                if (iPos != i->pos) {
-                    this->getTile(i->pos)->entity = nullptr;
-                    i->pos = iPos;
-                    this->getTile(iPos)->entity = i;
-                    this->schedule.tick += 1;
-                }
-            }
-        }
-    }
-
-    // Remove entity from the tile, then remove it from the actors vector
-    for (auto j : remove) {
-        this->clearEntity(j->pos);
-        this->schedule.removeEntity(j);
-        std::erase(this->actors, j);
-    }
 }
