@@ -25,7 +25,7 @@ void update() {
 
 int main() {
     Game game;
-    std::shared_ptr<Entity> enemy = std::make_shared<EnemyEntity>(EnemyEntity(PINK, Vec2(2,2), 10));
+    std::shared_ptr<Entity> enemy = std::make_shared<Entity>(Entity(PINK, Vec2(2,2), 10));
     std::shared_ptr<Entity> player = std::make_shared<PlayerEntity>(PlayerEntity(GREEN, Vec2(2,3), 13));
     game.entities.push_back(enemy);
     game.entities.push_back(player);

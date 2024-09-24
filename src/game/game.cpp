@@ -14,6 +14,7 @@ Game::Game() {
     SetTargetFPS(60);
 }
 
+// TODO: this could be rewritten, its a bit hacked together
 void Game::runEntities() {
     std::vector<std::shared_ptr<Entity>> remove;
     for (auto i : entities) {

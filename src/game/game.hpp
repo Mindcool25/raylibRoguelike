@@ -21,6 +21,8 @@ class Game {
         void render();
         void gameLoop();
         void runEntities();
+
+        void moveEntity();
 };
 
 #endif // GAME_HPP_

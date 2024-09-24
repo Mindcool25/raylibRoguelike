@@ -36,7 +36,6 @@ Vec2 PlayerEntity::move(Map* map) {
             } else if (curr->entity != nullptr) {
                 // React to the entity
                 curr->entity->damage(1);
-                map->schedule.tick++; // TODO: definitly change this
             }
         }
     }
