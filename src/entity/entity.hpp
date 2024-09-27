@@ -4,10 +4,11 @@
 #include "raylib.h"
 #include "../utils/vec2.hpp"
 #include "../utils/action.hpp"
+#include <memory>
 
 class Map;
 
-class Entity {
+class Entity: public std::enable_shared_from_this<Entity> {
     public:
         virtual ~Entity() = default;
         Entity(Color color = BLACK, Vec2 pos = Vec2(0,0), int health = 3);

@@ -42,9 +42,7 @@ void Game::runEntities() {
 
 void Game::gameLoop() {
     while (!WindowShouldClose()) {
-        std::cout << "Render" << std::endl;
         this->render();
-        std::cout << "Update" << std::endl;
         this->runEntities();
     }
 
@@ -67,10 +65,10 @@ void Game::handleAction(Action action) {
         case ActionType::none: std::cout<< "NONE" << std::endl; return;
         case ActionType::wait: break;
         // Move is a bit chunky, could be its own function probably
-        case ActionType::move: std::cout << "Moving" << std::endl;
-                    this->map.clearEntity(action.e->pos);
-                    action.e->pos = action.target;
-                    this->map.setEntity(action.e);
+        case ActionType::move:
+            this->map.clearEntity(action.e->pos);
+            action.e->pos = action.target;
+            this->map.setEntity(action.e);
             break;
         case ActionType::attack: break;
         default: return;

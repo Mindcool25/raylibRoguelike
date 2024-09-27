@@ -29,25 +29,26 @@ int main() {
     Game game;
     std::shared_ptr<Entity> enemy = std::make_shared<Entity>(Entity(BLACK, Vec2(2,5), 12));
     std::shared_ptr<Entity> enemy2 = std::make_shared<Entity>(Entity(PINK, Vec2(2,2), 10));
-    //std::shared_ptr<Entity> player = std::make_shared<PlayerEntity>(PlayerEntity(GREEN, Vec2(2,3), 13));
+    std::shared_ptr<Entity> player = std::make_shared<PlayerEntity>(PlayerEntity(GREEN, Vec2(2,3), 130));
     game.entities.push_back(enemy);
     game.entities.push_back(enemy2);
-    //game.entities.push_back(player);
+    game.entities.push_back(player);
 
     game.map.setEntity(enemy);
     game.map.setEntity(enemy2);
-    //game.map.setEntity(player);
+    game.map.setEntity(player);
 
-    //Action playerAct = Action{1, 0, Vec2(0,0), ActionType::none, player};
+    Action playerAct = Action{10, 0, Vec2(0,0), ActionType::none, player};
     Action entityAct = Action{3, 0, Vec2(0,0), ActionType::none, enemy};
     Action entityAct2 = Action{3, 0, Vec2(0,0), ActionType::none, enemy2};
 
-    //game.schedule.scheduleEvent(std::make_shared<Action>(playerAct));
+    game.schedule.scheduleEvent(playerAct);
     game.schedule.scheduleEvent(entityAct);
     game.schedule.scheduleEvent(entityAct2);
 
-    //player.reset();
+    player.reset();
     enemy.reset();
+    enemy2.reset();
 
     game.gameLoop();
 

@@ -4,14 +4,14 @@
 
 #include <iostream>
 
-// TODO: IMPORTANT!
-// Right now rescheduling seems to be borked when it comes to same tick things. needs to be fixed
+// DONE: Fix scheduling
 
-
-// TODO: Rewrite to use multimap
+// DONE?: Rewrite to use multimap
 //       Might need to have this run entity things
 //       Maybe have the scheduler return the action
 //       then have the map react to that
+
+// TODO: figure out why sometimes entities will just take a bunch of turns
 std::shared_ptr<Entity> Scheduler::getCurrent() {
     return nullptr;
 }
@@ -19,22 +19,27 @@ std::shared_ptr<Entity> Scheduler::getCurrent() {
 void Scheduler::runCurrent(Game* game, Map* map) {
     bool tickDone = true;
 
+    // Get the entities scheduled to go on this tick and iterate over them
     auto range = this->schedule.equal_range(this->tick);
-
     for (auto i = range.first; i != range.second; ++i) {
-        Action eAction = i->second->e->takeTurn(map);
-        std::cout << eAction.cost << std::endl;
-        eAction.e = i->second->e;
-        std::cout << eAction.target.x << ", " << eAction.target.y << std::endl;
-        if (eAction.type != ActionType::none) {
-            game->handleAction(eAction);
-            this->scheduleEvent(Action{eAction.cost, this->tick, Vec2(0,0), ActionType::none, i->second->e});
-        }
-        else {
-            tickDone = false;
+        // Make sure the entity hasn't already gone
+        if (i->second->type == ActionType::none) {
+            // Get the entity's action, if it doesn't do anything make sure to try again next frame
+            Action eAction = i->second->e->takeTurn(map);
+            if (eAction.type == ActionType::none) {
+                tickDone = false;
+            }
+
+            // Otherwise handle the action, schedule the next one, then make this action as done.
+            else {
+                game->handleAction(eAction);
+                this->scheduleEvent(Action{eAction.cost, 0, Vec2(0,0),ActionType::none, i->second->e});
+                i->second = std::make_shared<Action>(eAction);
+            }
         }
     }
     if (tickDone) {
+        std::cout << "Tick done" << std::endl;
         this->tick ++;
     }
 
@@ -51,7 +56,6 @@ void Scheduler::scheduleEvent(Action action) {
 }
 
 void Scheduler::removeEntity(std::shared_ptr<Entity> e) {
-    std::cout << "why is this ran???" << std::endl;
     for ( auto i = this->schedule.begin(); i != this->schedule.end(); i++ ) {
         if (i->first > this->tick) {
             if (i->second->e == e) {
