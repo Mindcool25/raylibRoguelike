@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include "raylib.h"
+#include <memory>
 
 Game::Game() {
     // Setting up initial variables
@@ -63,4 +64,22 @@ void Game::render() {
     map.render(10); // TODO: decide if map should actually draw itself
 
     EndDrawing();
+}
+
+// NOTE: probably can be improved to not be hard coded like this, who knows
+void Game::handleAction(std::shared_ptr<Action> action) {
+    // None shouldn't ever get here, but if it does just exit I guess
+    switch (action->type) {
+        case ActionType::none: return;
+        case ActionType::wait: break;
+        // Move is a bit chunky, could be its own function probably
+        case ActionType::move:
+                    this->map.getTile(action->e->pos)->entity = nullptr;
+                    action->e->pos = action->target;
+                    this->map.getTile(action->target)->entity = action->e;
+                    this->schedule.tick += 1;
+            break;
+        case ActionType::attack: break;
+        default: return;
+    }
 }

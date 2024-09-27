@@ -46,3 +46,28 @@ int Entity::attack() {
     int value = this->health / 5;
     return value;
 }
+
+Action Entity::takeTurn(Map *map) {
+    int cost = 5;
+    int tick = 0;
+    Vec2 target = Vec2(0,0);
+    ActionType type = ActionType::wait;
+
+    Vec2 mov = Vec2(0,0);
+    switch(GetRandomValue(0, 3)) {
+        // NSEW movement
+        case 0: mov = Vec2(0, 1); break;
+        case 1: mov = Vec2(0, -1); break;
+        case 2: mov = Vec2(1, 0); break;
+        case 3: mov = Vec2(-1, 0); break;
+    }
+    if (mov != Vec2(0,0)) {
+        Vec2 newPos = mov + this->pos;
+        if (Tile* curr = map->getTile(newPos); curr != nullptr)  {
+            if (curr->isOpen()) {
+                target = newPos;
+            }
+        }
+    }
+    return Action{cost, tick, target, type, std::make_shared<Entity>(this)};
+}

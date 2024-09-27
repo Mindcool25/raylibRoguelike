@@ -3,6 +3,7 @@
 
 #include "raylib.h"
 #include "../utils/vec2.hpp"
+#include "../utils/action.hpp"
 
 class Map;
 
@@ -18,6 +19,7 @@ class Entity {
 
         virtual void damage(int value);
         virtual Vec2 move(Map* map);
+        virtual Action takeTurn(Map* map);
         int attack();
 };
 
