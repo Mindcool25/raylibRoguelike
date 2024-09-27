@@ -42,7 +42,9 @@ void Game::runEntities() {
 
 void Game::gameLoop() {
     while (!WindowShouldClose()) {
+        std::cout << "Render" << std::endl;
         this->render();
+        std::cout << "Update" << std::endl;
         this->runEntities();
     }
 
@@ -59,18 +61,16 @@ void Game::render() {
 }
 
 // NOTE: probably can be improved to not be hard coded like this, who knows
-void Game::handleAction(std::shared_ptr<Action> action) {
+void Game::handleAction(Action action) {
     // None shouldn't ever get here, but if it does just exit I guess
-    switch (action->type) {
-        case ActionType::none: return;
+    switch (action.type) {
+        case ActionType::none: std::cout<< "NONE" << std::endl; return;
         case ActionType::wait: break;
         // Move is a bit chunky, could be its own function probably
-        case ActionType::move:
-                    this->map.getTile(action->e->pos)->entity = nullptr;
-                    action->e->pos = action->target;
-                    this->map.getTile(action->target)->entity = action->e;
-                    action->e->pos = action->target;
-                    this->schedule.tick += 1;
+        case ActionType::move: std::cout << "Moving" << std::endl;
+                    this->map.clearEntity(action.e->pos);
+                    action.e->pos = action.target;
+                    this->map.setEntity(action.e);
             break;
         case ActionType::attack: break;
         default: return;

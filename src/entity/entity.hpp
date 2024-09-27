@@ -18,7 +18,6 @@ class Entity {
         int health;
 
         virtual void damage(int value);
-        virtual Vec2 move(Map* map);
         virtual Action takeTurn(Map* map);
         int attack();
 };

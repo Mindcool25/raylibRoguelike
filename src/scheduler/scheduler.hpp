@@ -16,7 +16,7 @@ class Scheduler {
         std::shared_ptr<Entity> getCurrent();
         void runCurrent(Game* game, Map* map);
 
-        void scheduleEvent(std::shared_ptr<Action> action);
+        void scheduleEvent(Action action);
         void removeEntity(std::shared_ptr<Entity> e);
 
     private:
