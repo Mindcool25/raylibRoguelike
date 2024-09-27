@@ -2,6 +2,8 @@
 #include "raylib.h"
 #include <memory>
 
+#include <iostream>
+
 Game::Game() {
     // Setting up initial variables
     map = Map(Vec2(30, 30));
@@ -21,22 +23,12 @@ Game::Game() {
 //  Ask entity to take turn until it does
 //  If action is attack, check if attacked entity is dead, if so remove it
 void Game::runEntities() {
+    this->schedule.runCurrent(this, &this->map);
     std::vector<std::shared_ptr<Entity>> remove;
     for (auto i : entities) {
-        if (this->schedule.getCurrent() == i) {
-            if (i->health <= 0) {
-                remove.push_back(i);
-                i.reset();
-            } else {
-                Vec2 iPos = i->move(&this->map);
-                // Check if the entity actually moved, if it did, move on to next tick
-                if (iPos != i->pos) {
-                    this->map.getTile(i->pos)->entity = nullptr;
-                    i->pos = iPos;
-                    this->map.getTile(iPos)->entity = i;
-                    this->schedule.tick += 1;
-                }
-            }
+        if (i->health <= 0) {
+            remove.push_back(i);
+            i.reset();
         }
     }
 
@@ -77,6 +69,7 @@ void Game::handleAction(std::shared_ptr<Action> action) {
                     this->map.getTile(action->e->pos)->entity = nullptr;
                     action->e->pos = action->target;
                     this->map.getTile(action->target)->entity = action->e;
+                    action->e->pos = action->target;
                     this->schedule.tick += 1;
             break;
         case ActionType::attack: break;

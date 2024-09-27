@@ -2,6 +2,8 @@
 #include "../map/map.hpp"
 #include "raylib.h"
 
+#include <iostream>
+
 Entity::Entity(Color color,  Vec2 pos, int health) {
     this->disp = color;
     this->pos = pos;
@@ -24,7 +26,6 @@ Vec2 Entity::move(Map* map) {
                 return newPos;
             } else if (curr->entity != nullptr) {
                 // React to the entity
-                curr->entity->damage(1);
             }
         }
     }
@@ -51,7 +52,7 @@ Action Entity::takeTurn(Map *map) {
     int cost = 5;
     int tick = 0;
     Vec2 target = Vec2(0,0);
-    ActionType type = ActionType::wait;
+    ActionType type = ActionType::none;
 
     Vec2 mov = Vec2(0,0);
     switch(GetRandomValue(0, 3)) {
@@ -66,8 +67,10 @@ Action Entity::takeTurn(Map *map) {
         if (Tile* curr = map->getTile(newPos); curr != nullptr)  {
             if (curr->isOpen()) {
                 target = newPos;
+                type = ActionType::move;
             }
         }
     }
-    return Action{cost, tick, target, type, std::make_shared<Entity>(this)};
+
+    return Action{cost, tick, target, type, nullptr};
 }

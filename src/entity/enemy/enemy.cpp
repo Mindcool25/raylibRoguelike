@@ -1,6 +1,5 @@
 #include "enemy.hpp"
 #include "raylib.h"
-#include <iostream>
 
 EnemyEntity::EnemyEntity(Color disp, Vec2 pos, int health) {
     this->disp = disp;
@@ -23,8 +22,6 @@ Vec2 EnemyEntity::move(Map* map) {
             if (curr->isOpen()) {
                 return newPos;
             } else if (curr->entity != nullptr) {
-                // React to the entity
-                curr->entity->damage(1);
             }
         }
     }

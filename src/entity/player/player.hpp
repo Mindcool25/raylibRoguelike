@@ -11,6 +11,7 @@ class PlayerEntity: public Entity {
     public:
         PlayerEntity(Color disp = GREEN, Vec2 pos = Vec2(0,0), int health = 53);
 
+        Action takeTurn(Map* map) override;
         Vec2 move(Map* map) override;
 };
 

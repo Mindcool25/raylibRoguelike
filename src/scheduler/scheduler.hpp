@@ -20,7 +20,7 @@ class Scheduler {
         void removeEntity(std::shared_ptr<Entity> e);
 
     private:
-        std::map<int, std::shared_ptr<Action>> schedule;
+        std::multimap<int, std::shared_ptr<Action>> schedule;
 };
 
 
