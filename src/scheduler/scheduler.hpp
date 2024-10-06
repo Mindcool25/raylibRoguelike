@@ -5,6 +5,7 @@
 #include "../utils/action.hpp"
 #include <map>
 #include <memory>
+#include <vector>
 
 // Forward decleration go brrr
 class Game;
@@ -16,11 +17,18 @@ class Scheduler {
         std::shared_ptr<Entity> getCurrent();
         void runCurrent(Game* game, Map* map);
 
-        void scheduleEvent(Action action);
+        void scheduleEntity(std::shared_ptr<Entity> e, int scheduleTick);
         void removeEntity(std::shared_ptr<Entity> e);
 
     private:
         std::multimap<int, std::shared_ptr<Action>> schedule;
+
+        std::vector<std::shared_ptr<Action>> tickActions;
+
+        void getCurrentActions();
+
+        std::shared_ptr<Action> currentAction;
+
 };
 
 

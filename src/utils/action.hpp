@@ -15,11 +15,11 @@ enum ActionType {
 
 // TODO: Brainstorm how to save this stuff
 struct Action {
-    int cost;
-    int tick;
-    Vec2 target;
-    ActionType type;
-    std::shared_ptr<Entity> e;
+    int cost = 0;
+    int tick = 0;
+    Vec2 target = Vec2{0, 0};
+    ActionType type = ActionType::none;
+    std::shared_ptr<Entity> e = nullptr;
 };
 
 #endif // ACTION_HPP_

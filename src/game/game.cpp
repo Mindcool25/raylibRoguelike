@@ -6,7 +6,7 @@
 
 Game::Game() {
     // Setting up initial variables
-    map = Map(Vec2(30, 30));
+    map = Map(Vec2(100, 100));
     schedule = Scheduler();
     entities = {};
 
@@ -44,6 +44,9 @@ void Game::gameLoop() {
     while (!WindowShouldClose()) {
         this->render();
         this->runEntities();
+        if (GetKeyPressed() == KEY_W) {
+            this->schedule.tick++;
+        }
     }
 
     CloseWindow();
@@ -53,22 +56,22 @@ void Game::render() {
     BeginDrawing();
     ClearBackground(BLACK);
 
-    map.render(10); // TODO: decide if map should actually draw itself
+    map.render(8); // TODO: decide if map should actually draw itself
 
     EndDrawing();
 }
 
 // NOTE: probably can be improved to not be hard coded like this, who knows
-void Game::handleAction(Action action) {
+void Game::handleAction(std::shared_ptr<Action> action) {
     // None shouldn't ever get here, but if it does just exit I guess
-    switch (action.type) {
+    switch (action->type) {
         case ActionType::none: std::cout<< "NONE" << std::endl; return;
         case ActionType::wait: break;
         // Move is a bit chunky, could be its own function probably
         case ActionType::move:
-            this->map.clearEntity(action.e->pos);
-            action.e->pos = action.target;
-            this->map.setEntity(action.e);
+            this->map.clearEntity(action->e->pos);
+            action->e->pos = action->target;
+            this->map.setEntity(action->e);
             break;
         case ActionType::attack: break;
         default: return;

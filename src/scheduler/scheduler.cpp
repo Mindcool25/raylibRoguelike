@@ -10,47 +10,37 @@
 //       Might need to have this run entity things
 //       Maybe have the scheduler return the action
 //       then have the map react to that
-
-// TODO: figure out why sometimes entities will just take a bunch of turns
-std::shared_ptr<Entity> Scheduler::getCurrent() {
-    return nullptr;
-}
-
+//
 void Scheduler::runCurrent(Game* game, Map* map) {
     bool tickDone = true;
 
-    // Get the entities scheduled to go on this tick and iterate over them
     auto range = this->schedule.equal_range(this->tick);
-    for (auto i = range.first; i != range.second; ++i) {
-        // Make sure the entity hasn't already gone
-        if (i->second->type == ActionType::none) {
-            // Get the entity's action, if it doesn't do anything make sure to try again next frame
-            Action eAction = i->second->e->takeTurn(map);
-            if (eAction.type == ActionType::none) {
-                tickDone = false;
-            }
-
-            // Otherwise handle the action, schedule the next one, then make this action as done.
-            else {
-                game->handleAction(eAction);
-                this->scheduleEvent(Action{eAction.cost, 0, Vec2(0,0),ActionType::none, i->second->e});
-                i->second = std::make_shared<Action>(eAction);
+    for ( auto i = range.first; i != range.second; i++ ) {
+        if (i->first == this->tick) {
+            if (i->second->type == ActionType::none) {
+                i->second = std::make_shared<Action>(i->second->e->takeTurn(map));
+                if (i->second->type != ActionType::none) {
+                    std::cout << "Entity of type " << i->second->e->name << " taking turn" << std::endl;
+                    game->handleAction(i->second);
+                    this->scheduleEntity(i->second->e, this->tick + i->second->cost);
+                }
+                else {
+                    tickDone = false;
+                }
             }
         }
     }
+
     if (tickDone) {
-        std::cout << "Tick done" << std::endl;
-        this->tick ++;
+        std::cout << "Tick " << this->tick << " done ------------------------" << std::endl;
+        this->tick++;
     }
 
 }
 
-void Scheduler::scheduleEvent(Action action) {
-    if (schedule.contains(this->tick + action.cost)) {
-        std::cout << "smack" << std::endl;
-    }
+void Scheduler::scheduleEntity(std::shared_ptr<Entity> e, int scheduleTick) {
     // Create a new action cost amount of ticks after current tick
-    Action newAction = Action{0, this->tick + action.cost, Vec2(0,0), ActionType::none, action.e};
+    Action newAction = Action{0, scheduleTick, Vec2(0,0), ActionType::none, e};
     // Add it to the schedule
     this->schedule.insert({newAction.tick, std::make_shared<Action>(newAction)});
 }

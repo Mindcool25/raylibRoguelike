@@ -3,7 +3,6 @@
 #include "raylib.h"
 
 #include <iostream>
-#include <memory>
 
 Entity::Entity(Color color,  Vec2 pos, int health) {
     this->disp = color;
@@ -27,7 +26,7 @@ int Entity::attack() {
 }
 
 Action Entity::takeTurn(Map *map) {
-    int cost = 3;
+    int cost = 1;
     int tick = 0;
     Vec2 target = Vec2(0,0);
     ActionType type = ActionType::none;

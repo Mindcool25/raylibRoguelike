@@ -17,7 +17,7 @@ Map::Map(Vec2 size) {
                     setWall(Vec2(i, j));
                 }
                 else {
-                    if (GetRandomValue(0, 5) == 1) {
+                    if (GetRandomValue(0, 5) == 100) {
                         setWall(Vec2(i, j));
                     } else {
                         setFloor(Vec2(i, j));

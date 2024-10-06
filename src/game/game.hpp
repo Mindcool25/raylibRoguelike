@@ -22,7 +22,7 @@ class Game {
         void gameLoop();
         void runEntities();
 
-        void handleAction(Action action);
+        void handleAction(std::shared_ptr<Action> action);
 
         void moveEntity();
 };
