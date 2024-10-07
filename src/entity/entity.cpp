@@ -27,7 +27,7 @@ int Entity::attack() {
 }
 
 Action Entity::takeTurn(Map *map) {
-    int cost = 1;
+    int cost = 3;
     int tick = 0;
     Vec2 target = Vec2(0,0);
     ActionType type = ActionType::none;

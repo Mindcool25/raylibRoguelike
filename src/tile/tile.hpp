@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "../entity/entity.hpp"
+#include "../item/item.hpp"
 #include "raylib.h"
 
 enum Occupant {
@@ -17,7 +18,7 @@ class Tile {
     public:
         bool walkable;
         std::shared_ptr<Entity> entity = nullptr;
-        std::vector<int> items;
+        std::vector<std::shared_ptr<Item>> items;
 
         bool isOpen();
         Occupant getOccupant();

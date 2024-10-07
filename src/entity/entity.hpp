@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "../utils/vec2.hpp"
 #include "../utils/action.hpp"
+#include "../inventory/inventory.hpp"
 #include <memory>
 #include <string>
 
@@ -19,6 +20,8 @@ class Entity: public std::enable_shared_from_this<Entity> {
         Color disp;
         Vec2 pos;
         int health;
+
+        Inventory inventory;
 
         virtual void damage(int value);
         virtual Action takeTurn(Map* map);

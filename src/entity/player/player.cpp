@@ -34,9 +34,19 @@ Action PlayerEntity::takeTurn(Map* map) {
     if (mov != Vec2(0,0)) {
         Vec2 newPos = mov + this->pos;
         if (Tile* curr = map->getTile(newPos); curr != nullptr)  {
-            if (curr->isOpen()) {
-                target = newPos;
-                type = ActionType::move;
+            switch(curr->getOccupant()) {
+                case Occupant::empty:
+                    target = newPos;
+                    type = ActionType::move;
+                    break;
+                case Occupant::entity:
+                    target = newPos;
+                    type = ActionType::attack;
+                    break;
+                case Occupant::wall:
+                    target = newPos;
+                    type = ActionType::none;
+                    break;
             }
         }
     }
