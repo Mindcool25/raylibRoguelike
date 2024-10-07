@@ -16,6 +16,7 @@ Entity::Entity(Color color,  Vec2 pos, int health) {
 void Entity::damage(int value){
     this->health -= value;
     if (this->health <=0) {
+        std::cout << "DEAD" << std::endl;
         this->alive = false;
     }
 }
@@ -45,6 +46,20 @@ Action Entity::takeTurn(Map *map) {
             if (curr->isOpen()) {
                 target = newPos;
                 type = ActionType::move;
+            }
+            switch (curr->getOccupant()) {
+                case Occupant::empty:
+                    target = newPos;
+                    type = ActionType::move;
+                    break;
+                case Occupant::entity:
+                    target = newPos;
+                    type = ActionType::attack;
+                    break;
+                case Occupant::wall:
+                    target = newPos;
+                    type = ActionType::none;
+                    break;
             }
         }
     }

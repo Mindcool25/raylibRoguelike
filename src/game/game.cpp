@@ -14,7 +14,7 @@ Game::Game() {
     // NOTE: Maybe not have this happen in the constructor, have it run when the game
     //       actually needs to start showing things
     InitWindow(800, 800, "Roguelike Thing"); // TODO: no hardcoded value here for later
-    SetTargetFPS(60);
+    SetTargetFPS(120);
 }
 
 // TODO: this could be rewritten, its a bit hacked together
@@ -44,11 +44,7 @@ void Game::gameLoop() {
     while (!WindowShouldClose()) {
         this->render();
         this->runEntities();
-        if (GetKeyPressed() == KEY_W) {
-            this->schedule.tick++;
-        }
     }
-
     CloseWindow();
 }
 
@@ -65,15 +61,23 @@ void Game::render() {
 void Game::handleAction(std::shared_ptr<Action> action) {
     // None shouldn't ever get here, but if it does just exit I guess
     switch (action->type) {
-        case ActionType::none: std::cout<< "NONE" << std::endl; return;
+        case ActionType::none:
+            std::cout<< "NONE" << std::endl;
+            return;
+
         case ActionType::wait: break;
+
         // Move is a bit chunky, could be its own function probably
         case ActionType::move:
             this->map.clearEntity(action->e->pos);
             action->e->pos = action->target;
             this->map.setEntity(action->e);
             break;
-        case ActionType::attack: break;
+
+        case ActionType::attack:
+            this->map.getTile(action->target)->entity->damage(action->e->attack());
+            break;
+
         default: return;
     }
 }

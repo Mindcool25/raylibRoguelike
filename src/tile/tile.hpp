@@ -7,6 +7,12 @@
 #include "../entity/entity.hpp"
 #include "raylib.h"
 
+enum Occupant {
+    empty,
+    entity,
+    wall,
+};
+
 class Tile {
     public:
         bool walkable;
@@ -14,6 +20,7 @@ class Tile {
         std::vector<int> items;
 
         bool isOpen();
+        Occupant getOccupant();
 };
 
 #endif // TILE_HPP_

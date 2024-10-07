@@ -7,7 +7,6 @@
 #include <memory>
 #include <vector>
 
-// Forward decleration go brrr
 class Game;
 
 class Scheduler {

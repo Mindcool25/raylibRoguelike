@@ -4,23 +4,15 @@
 
 #include <iostream>
 
-// DONE: Fix scheduling
-
-// DONE?: Rewrite to use multimap
-//       Might need to have this run entity things
-//       Maybe have the scheduler return the action
-//       then have the map react to that
-//
 void Scheduler::runCurrent(Game* game, Map* map) {
     bool tickDone = true;
 
     auto range = this->schedule.equal_range(this->tick);
     for ( auto i = range.first; i != range.second; i++ ) {
         if (i->first == this->tick) {
-            if (i->second->type == ActionType::none) {
+            if (i->second->type == ActionType::none && i->second->e->alive) {
                 i->second = std::make_shared<Action>(i->second->e->takeTurn(map));
                 if (i->second->type != ActionType::none) {
-                    std::cout << "Entity of type " << i->second->e->name << " taking turn" << std::endl;
                     game->handleAction(i->second);
                     this->scheduleEntity(i->second->e, this->tick + i->second->cost);
                 }
@@ -32,10 +24,11 @@ void Scheduler::runCurrent(Game* game, Map* map) {
     }
 
     if (tickDone) {
-        std::cout << "Tick " << this->tick << " done ------------------------" << std::endl;
+        // No memory leak for you
+        auto range = this->schedule.lower_bound(this->tick);
+        this->schedule.erase(this->schedule.begin(), range);
         this->tick++;
     }
-
 }
 
 void Scheduler::scheduleEntity(std::shared_ptr<Entity> e, int scheduleTick) {
@@ -46,11 +39,4 @@ void Scheduler::scheduleEntity(std::shared_ptr<Entity> e, int scheduleTick) {
 }
 
 void Scheduler::removeEntity(std::shared_ptr<Entity> e) {
-    for ( auto i = this->schedule.begin(); i != this->schedule.end(); i++ ) {
-        if (i->first > this->tick) {
-            if (i->second->e == e) {
-                this->schedule.erase(i);
-            }
-        }
-    }
 }
