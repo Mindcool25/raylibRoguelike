@@ -2,8 +2,6 @@
 #include <memory>
 #include "../game/game.hpp"
 
-#include <iostream>
-
 void Scheduler::runCurrent(Game* game, Map* map) {
     bool tickDone = true;
 

@@ -14,7 +14,7 @@ Game::Game() {
     // NOTE: Maybe not have this happen in the constructor, have it run when the game
     //       actually needs to start showing things
     InitWindow(800, 800, "Roguelike Thing"); // TODO: no hardcoded value here for later
-    SetTargetFPS(120);
+    SetTargetFPS(1000);
 }
 
 // TODO: this could be rewritten, its a bit hacked together

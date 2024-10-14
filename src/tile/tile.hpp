@@ -6,7 +6,6 @@
 
 #include "../entity/entity.hpp"
 #include "../item/item.hpp"
-#include "raylib.h"
 
 enum Occupant {
     empty,

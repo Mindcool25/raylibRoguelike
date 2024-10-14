@@ -10,6 +10,13 @@
 
 class Map;
 
+/**
+ * Entity
+ * Base entity class
+ *
+ * This holds all data relating to an entity as well as
+ * turn handling.
+ */
 class Entity: public std::enable_shared_from_this<Entity> {
     public:
         virtual ~Entity() = default;

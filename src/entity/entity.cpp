@@ -3,7 +3,9 @@
 #include "raylib.h"
 
 #include <iostream>
-
+/**
+ * Entity constructor
+ */
 Entity::Entity(Color color,  Vec2 pos, int health) {
     this->disp = color;
     this->pos = pos;

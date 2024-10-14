@@ -2,7 +2,6 @@
 #define ENEMY_HPP_
 
 #include "../entity.hpp"
-#include "../../map/map.hpp"
 
 class EnemyEntity: public Entity {
     public:

@@ -2,13 +2,10 @@
 #define MAP_HPP
 
 #include <memory>
-#include <vector>
 #include <unordered_map>
 #include "../utils/vec2.hpp"
 #include "../tile/tile.hpp"
 #include "../entity/entity.hpp"
-#include "../scheduler/scheduler.hpp"
-#include "raylib.h"
 
 class Map {
     public:
