@@ -1,6 +1,8 @@
 #include "player.hpp"
 #include "raylib.h"
 
+#include <iostream>
+
 PlayerEntity::PlayerEntity(Color disp, Vec2 pos, int health, std::string name) {
     this->disp = disp;
     this->pos = pos;
@@ -29,6 +31,10 @@ Action PlayerEntity::takeTurn(Map* map) {
         case KEY_B: mov = Vec2(-1, 1); break;
         case KEY_N: mov = Vec2(1, 1); break;
         case KEY_U: mov = Vec2(1, -1); break;
+
+        // Inventory
+        case KEY_I: this->checkInventory(); break;
+        case KEY_O: this->addInventory(); break;
     }
 
     if (mov != Vec2(0,0)) {
@@ -53,3 +59,16 @@ Action PlayerEntity::takeTurn(Map* map) {
 
     return Action{cost, tick, target, type, shared_from_this()};
 }
+
+void PlayerEntity::checkInventory() {
+    std::cout << "INVENTORY: " << std::endl;
+    for(auto i : this->inventory.items) {
+        std::cout << "Item: " << i->name << std::endl;
+    }
+}
+
+void PlayerEntity::addInventory() {
+    std::shared_ptr<Item> i = std::make_shared<Item>(Item());
+    this->inventory.pickUp(i);
+}
+

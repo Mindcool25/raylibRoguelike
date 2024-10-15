@@ -15,3 +15,7 @@ Occupant Tile::getOccupant() {
         return Occupant::empty;
     }
 }
+
+std::vector<std::shared_ptr<Item>> Tile::getItems() {
+    return this->items;
+}

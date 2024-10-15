@@ -24,10 +24,12 @@ add_executable(
   src/map/map.cpp
   src/tile/tile.cpp
   src/game/game.cpp
+  src/item/item.cpp
   src/utils/vec2.cpp
   src/entity/entity.cpp
   src/entity/enemy/enemy.cpp
   src/scheduler/scheduler.cpp
+  src/inventory/inventory.cpp
   src/entity/player/player.cpp
 )
 

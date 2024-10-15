@@ -19,6 +19,8 @@ class Tile {
         std::shared_ptr<Entity> entity = nullptr;
         std::vector<std::shared_ptr<Item>> items;
 
+        std::vector<std::shared_ptr<Item>> getItems();
+
         bool isOpen();
         Occupant getOccupant();
 };

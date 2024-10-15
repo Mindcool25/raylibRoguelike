@@ -11,7 +11,10 @@ class PlayerEntity: public Entity {
 
         Action takeTurn(Map* map) override;
 
-        int test();
+        void checkInventory();
+        void addInventory();
+
+        Inventory inventory;
 };
 
 #endif // PLAYER_HPP

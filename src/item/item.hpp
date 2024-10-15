@@ -11,6 +11,7 @@ enum ItemType {
 
 class Item {
     public:
+        Item(ItemType type = ItemType::trash, std::string name = "trash Item");
         ItemType type;
         std::string name;
         void use();

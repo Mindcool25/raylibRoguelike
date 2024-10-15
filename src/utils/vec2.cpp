@@ -1,5 +1,4 @@
 #include "vec2.hpp"
-#include "raylib.h"
 
 // Stuff to make the vec2 class hashable
 bool Vec2::operator==(const Vec2& other) const {
