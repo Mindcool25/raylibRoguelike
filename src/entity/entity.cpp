@@ -1,13 +1,14 @@
 #include "entity.hpp"
-#include "../map/map.hpp"
 #include "raylib.h"
+#include "../tile/tile.hpp"
+#include "../map/map.hpp"
 
 #include <iostream>
 /**
  * Entity constructor
  */
-Entity::Entity(Color color,  Vec2 pos, int health) {
-    this->disp = color;
+Entity::Entity(Color color,  Vec2 pos, int health, char disp) {
+    this->disp.color = color;
     this->pos = pos;
     this->health = health;
 }

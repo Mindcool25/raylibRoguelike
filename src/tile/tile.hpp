@@ -15,7 +15,12 @@ enum Occupant {
 
 class Tile {
     public:
+        Tile(bool walkable = true, char disp = '.', Color color = BLUE);
+
         bool walkable;
+
+        Disp disp;
+
         std::shared_ptr<Entity> entity = nullptr;
         std::vector<std::shared_ptr<Item>> items;
 

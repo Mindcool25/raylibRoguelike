@@ -1,5 +1,11 @@
 #include "tile.hpp"
 
+Tile::Tile(bool walkable, char disp, Color color) {
+    this->walkable = walkable;
+    this->disp.dispChar = disp;
+    this->disp.color = color;
+}
+
 bool Tile::isOpen() {
     return walkable && (entity == nullptr);
 }

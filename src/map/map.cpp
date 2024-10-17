@@ -1,4 +1,5 @@
 #include "map.hpp"
+#include "raylib.h"
 
 Map::~Map() {
 }
@@ -29,33 +30,28 @@ Map::Map(Vec2 size) {
 }
 
 void Map::setWall(Vec2 pos) {
-    Tile newWall;
-    newWall.walkable = false;
-    this->tiles.insert_or_assign(pos, newWall);
-};
+    this->tiles.insert_or_assign(pos, Tile(false, '#'));
+}
 
 void Map::setFloor(Vec2 pos) {
-    Tile newFloor;
-    newFloor.walkable = true;
-    this->tiles.insert_or_assign(pos, newFloor);}
+    this->tiles.insert_or_assign(pos, Tile(true, '.'));
+}
 
 
 // TODO: This should be changed eventually to use ASCII rather than
 //       colored squares.
-void Map::render(int tile_size) const {
+void Map::render(int tile_size, Font font) const {
     for (auto t = this->tiles.begin(); t != this->tiles.end(); t++) {
         Tile curr = t->second;
-        Color color = WHITE;
+        Disp disp = Disp('.' ,WHITE);
         if (curr.entity != nullptr) {
-            color = curr.entity->disp;
+            disp = curr.entity->disp;
         }
-        else if (!curr.walkable) {
-            color = RED;
+        else {
+            disp = curr.disp;
         }
-        else if (curr.walkable) {
-            color = BLUE;
-        }
-        DrawRectangle(t->first.x * tile_size, t->first.y * tile_size, tile_size, tile_size, color);
+        //DrawRectangle(t->first.x * tile_size, t->first.y * tile_size, tile_size, tile_size, color);
+        DrawTextCodepoint(font, disp.dispChar, Vector2(t->first.x * tile_size, t->first.y * tile_size), tile_size, disp.color);
     }
 }
 

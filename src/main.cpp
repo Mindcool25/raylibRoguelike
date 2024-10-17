@@ -12,9 +12,10 @@
 // DONE: scheduling should use a multimap to allow multiple things happening on one tick.
 // DONE: Rewrite scheduling and entity turns
 // DONE: Reimplement attacking
-// TODO: Implement items, inventories
+// DONE (kinda): Implement items, inventories
 // TODO: Change rendering to be done with ASCII rather than colored squares.
 // TODO: Refactor everything, standardize var names and import patterns.
+// TODO: Fully implement items
 
 void draw() {
     ClearBackground(BLACK);
@@ -36,8 +37,8 @@ int main() {
 
     player.reset();
 
-    for (int i = 0; i < 50; i++) {
-        std::shared_ptr<Entity> enemy = std::make_shared<Entity>(Entity(ColorFromHSV(GetRandomValue(0, 355), 100, 100), Vec2(GetRandomValue(1, 90),GetRandomValue(1, 90)), 12));
+    for (int i = 0; i < 5; i++) {
+        std::shared_ptr<Entity> enemy = std::make_shared<Entity>(Entity(ColorFromHSV(GetRandomValue(0, 355), 100, 100), Vec2(GetRandomValue(1, 20),GetRandomValue(1, 20)), 12, 'E'));
         game.entities.push_back(enemy);
         game.map.setEntity(enemy);
         game.schedule.scheduleEntity(enemy, GetRandomValue(1, 30));

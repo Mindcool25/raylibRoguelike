@@ -22,7 +22,7 @@ class Map {
         void setWall(Vec2 pos);
         void setFloor(Vec2 pos);
 
-        void render(int tile_size) const;
+        void render(int tile_size, Font font) const;
 
     protected:
         std::unordered_map<Vec2, Tile, VecHash> tiles;

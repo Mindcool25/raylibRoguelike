@@ -5,6 +5,7 @@
 #include "../utils/vec2.hpp"
 #include "../utils/action.hpp"
 #include "../inventory/inventory.hpp"
+#include "../utils/disp.hpp"
 #include <memory>
 #include <string>
 
@@ -20,11 +21,13 @@ class Map;
 class Entity: public std::enable_shared_from_this<Entity> {
     public:
         virtual ~Entity() = default;
-        Entity(Color color = BLACK, Vec2 pos = Vec2(0,0), int health = 3);
+        Entity(Color color = BLACK, Vec2 pos = Vec2(0,0), int health = 3, char disp = 'E');
         bool alive = true;
 
-        std::string name = "Generic";
-        Color disp;
+        std::string name;
+
+        Disp disp;
+
         Vec2 pos;
         int health;
 

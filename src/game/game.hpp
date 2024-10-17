@@ -19,6 +19,7 @@ class Game {
         Game();
 
         Map map;
+        Font font;
         Scheduler schedule;
         std::vector<std::shared_ptr<Entity>> entities;
 

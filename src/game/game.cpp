@@ -6,7 +6,7 @@
 
 Game::Game() {
     // Setting up initial variables
-    map = Map(Vec2(100, 100));
+    map = Map(Vec2(25, 25));
     schedule = Scheduler();
     entities = {};
 
@@ -14,7 +14,10 @@ Game::Game() {
     // NOTE: Maybe not have this happen in the constructor, have it run when the game
     //       actually needs to start showing things
     InitWindow(800, 800, "Roguelike Thing"); // TODO: no hardcoded value here for later
-    SetTargetFPS(1000);
+    SetTargetFPS(120);
+
+    // Make sure to load the font after the window
+    font = LoadFont("assets/fonts/Px437_DTK_BIOS.ttf");
 }
 
 // TODO: this could be rewritten, its a bit hacked together
@@ -52,7 +55,8 @@ void Game::render() {
     BeginDrawing();
     ClearBackground(BLACK);
 
-    map.render(8); // TODO: decide if map should actually draw itself
+    map.render(20, this->font); // TODO: decide if map should actually draw itself
+    DrawFPS(0, 0);
 
     EndDrawing();
 }

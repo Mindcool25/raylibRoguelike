@@ -1,13 +1,16 @@
 #include "player.hpp"
 #include "raylib.h"
 
+#include "../../map/map.hpp"
+
 #include <iostream>
 
-PlayerEntity::PlayerEntity(Color disp, Vec2 pos, int health, std::string name) {
-    this->disp = disp;
+PlayerEntity::PlayerEntity(Color disp, Vec2 pos, int health, std::string name, char dispChar) {
+    this->disp.color = disp;
     this->pos = pos;
     this->health = health;
     this->name = name;
+    this->disp.dispChar = dispChar;
 }
 
 Action PlayerEntity::takeTurn(Map* map) {

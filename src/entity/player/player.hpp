@@ -1,5 +1,4 @@
 #include "../entity.hpp"
-#include "../../map/map.hpp"
 #include "../../utils/vec2.hpp"
 
 #ifndef PLAYER_HPP
@@ -7,7 +6,7 @@
 
 class PlayerEntity: public Entity {
     public:
-        PlayerEntity(Color disp = GREEN, Vec2 pos = Vec2(0,0), int health = 53, std::string name = "Player");
+        PlayerEntity(Color color = GREEN, Vec2 pos = Vec2(0,0), int health = 53, std::string name = "Player", char disp = '@');
 
         Action takeTurn(Map* map) override;
 
