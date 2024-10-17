@@ -16,7 +16,7 @@ Game::Game() {
     InitWindow(800, 800, "Roguelike Thing"); // TODO: no hardcoded value here for later
     SetTargetFPS(120);
 
-    // Make sure to load the font after the window
+    // Make sure to load the font after the window is created
     font = LoadFont("assets/fonts/Px437_DTK_BIOS.ttf");
 }
 
@@ -26,7 +26,10 @@ Game::Game() {
 //  Ask entity to take turn until it does
 //  If action is attack, check if attacked entity is dead, if so remove it
 void Game::runEntities() {
+    // run current entities TODO: look at this again
     this->schedule.runCurrent(this, &this->map);
+
+    // Check for dead entities and remove them
     std::vector<std::shared_ptr<Entity>> remove;
     for (auto i : entities) {
         if (i->health <= 0) {
@@ -35,7 +38,7 @@ void Game::runEntities() {
         }
     }
 
-    // Remove entity from the tile, then remove it from the actors vector
+    // Remove entity from the tile, then remove it from the entites vector
     for (auto j : remove) {
         this->map.clearEntity(j->pos);
         this->schedule.removeEntity(j);
@@ -43,6 +46,7 @@ void Game::runEntities() {
     }
 }
 
+// Main game loop
 void Game::gameLoop() {
     while (!WindowShouldClose()) {
         this->render();
@@ -51,11 +55,13 @@ void Game::gameLoop() {
     CloseWindow();
 }
 
+// Render loop
 void Game::render() {
     BeginDrawing();
     ClearBackground(BLACK);
 
-    map.render(20, this->font); // TODO: decide if map should actually draw itself
+    map.render(10, this->font); // TODO: decide if map should actually draw itself
+                                // NOTE: it is probably fine
     DrawFPS(0, 0);
 
     EndDrawing();
@@ -69,6 +75,7 @@ void Game::handleAction(std::shared_ptr<Action> action) {
             std::cout<< "NONE" << std::endl;
             return;
 
+        // If the action is wait, just do nothing.
         case ActionType::wait: break;
 
         // Move is a bit chunky, could be its own function probably
@@ -78,10 +85,13 @@ void Game::handleAction(std::shared_ptr<Action> action) {
             this->map.setEntity(action->e);
             break;
 
+        // Attack given entity
+        // NOTE: might need to do validation on this
         case ActionType::attack:
             this->map.getTile(action->target)->entity->damage(action->e->attack());
             break;
 
+        // If all elses fails, just return
         default: return;
     }
 }

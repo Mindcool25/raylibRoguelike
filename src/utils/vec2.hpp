@@ -1,8 +1,6 @@
 #ifndef VEC2_HPP
 #define VEC2_HPP
 
-#include "raylib.h"
-#include <unordered_map>
 #include <cstddef>
 
 class Vec2 {

@@ -13,7 +13,7 @@
 // DONE: Rewrite scheduling and entity turns
 // DONE: Reimplement attacking
 // DONE (kinda): Implement items, inventories
-// TODO: Change rendering to be done with ASCII rather than colored squares.
+// DONE: Change rendering to be done with ASCII rather than colored squares.
 // TODO: Refactor everything, standardize var names and import patterns.
 // TODO: Fully implement items
 
@@ -28,7 +28,7 @@ void update() {
 
 int main() {
     Game game;
-    std::shared_ptr<Entity> player = std::make_shared<PlayerEntity>(PlayerEntity(GREEN, Vec2(2,3), 130));
+    std::shared_ptr<Entity> player = std::make_shared<PlayerEntity>(PlayerEntity(Disp{'@', WHITE}, Vec2(2,3), 130));
     game.entities.push_back(player);
 
     game.map.setEntity(player);
@@ -37,8 +37,15 @@ int main() {
 
     player.reset();
 
+    std::shared_ptr<Item> item = std::make_shared<Item>(Item());
+    game.map.addItem(Vec2{5, 5}, item);
+    item.reset();
+
+
     for (int i = 0; i < 5; i++) {
-        std::shared_ptr<Entity> enemy = std::make_shared<Entity>(Entity(ColorFromHSV(GetRandomValue(0, 355), 100, 100), Vec2(GetRandomValue(1, 20),GetRandomValue(1, 20)), 12, 'E'));
+        Color entityColor = ColorFromHSV(GetRandomValue(0, 355), 100, 100);
+        char entityChar = 'E';
+        std::shared_ptr<Entity> enemy = std::make_shared<Entity>(Entity(Disp{entityChar, entityColor}, Vec2(GetRandomValue(1, 20),GetRandomValue(1, 20)), 12));
         game.entities.push_back(enemy);
         game.map.setEntity(enemy);
         game.schedule.scheduleEntity(enemy, GetRandomValue(1, 30));

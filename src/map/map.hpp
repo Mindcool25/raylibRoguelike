@@ -16,6 +16,7 @@ class Map {
 
         void setEntity(std::shared_ptr<Entity> e);
         void clearEntity(Vec2 pos);
+        void addItem(Vec2 pos, std::shared_ptr<Item> item);
 
         Tile* getTile(Vec2 pos);
 

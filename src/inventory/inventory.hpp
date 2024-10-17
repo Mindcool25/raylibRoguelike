@@ -10,7 +10,7 @@ class Inventory {
     public:
         std::vector<std::shared_ptr<Item>> items;
 
-        void pickUp(std::shared_ptr<Item> item);
+        void store(std::shared_ptr<Item> item);
         std::shared_ptr<Item> drop(int itemIndex);
 };
 

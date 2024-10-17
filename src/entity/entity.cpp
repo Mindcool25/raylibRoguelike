@@ -7,8 +7,8 @@
 /**
  * Entity constructor
  */
-Entity::Entity(Color color,  Vec2 pos, int health, char disp) {
-    this->disp.color = color;
+Entity::Entity(Disp disp,  Vec2 pos, int health) {
+    this->disp = disp;
     this->pos = pos;
     this->health = health;
 }

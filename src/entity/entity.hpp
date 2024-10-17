@@ -5,7 +5,6 @@
 #include "../utils/vec2.hpp"
 #include "../utils/action.hpp"
 #include "../inventory/inventory.hpp"
-#include "../utils/disp.hpp"
 #include <memory>
 #include <string>
 
@@ -20,21 +19,25 @@ class Map;
  */
 class Entity: public std::enable_shared_from_this<Entity> {
     public:
+        // Deconstructor
         virtual ~Entity() = default;
-        Entity(Color color = BLACK, Vec2 pos = Vec2(0,0), int health = 3, char disp = 'E');
-        bool alive = true;
 
+        // Constructor
+        Entity(Disp disp = Disp{'e', PINK}, Vec2 pos = Vec2(0,0), int health = 3);
+
+        // Base variables
         std::string name;
-
-        Disp disp;
-
-        Vec2 pos;
+        bool alive = true;
         int health;
+        Disp disp;
+        Vec2 pos;
 
+        // inventory
         Inventory inventory;
 
-        virtual void damage(int value);
+        // Default damage, attack, and take turn function for entities
         virtual Action takeTurn(Map* map);
+        virtual void damage(int value);
         int attack();
 };
 
