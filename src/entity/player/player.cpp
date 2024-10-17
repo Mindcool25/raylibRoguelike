@@ -5,15 +5,17 @@
 
 #include <iostream>
 
-PlayerEntity::PlayerEntity(Color disp, Vec2 pos, int health, std::string name, char dispChar) {
-    this->disp.color = disp;
+// TODO: rewrite input to call a function rather than run code inline
+
+PlayerEntity::PlayerEntity(Disp disp, Vec2 pos, int health, std::string name) {
+    this->disp = disp;
     this->pos = pos;
     this->health = health;
     this->name = name;
-    this->disp.dispChar = dispChar;
 }
 
 Action PlayerEntity::takeTurn(Map* map) {
+    // Default action settings
     int cost = 1;
     int tick = 0;
     Vec2 target = Vec2(0,0);
@@ -35,23 +37,33 @@ Action PlayerEntity::takeTurn(Map* map) {
         case KEY_N: mov = Vec2(1, 1); break;
         case KEY_U: mov = Vec2(1, -1); break;
 
+        // Wait
+        case KEY_PERIOD: type = ActionType::wait; break;
+
         // Inventory
         case KEY_I: this->checkInventory(); break;
-        case KEY_O: this->addInventory(); break;
+        case KEY_O: this->addInventory(map); break;
+        case KEY_D: this->dropItem(map); break;
     }
 
+    // Check if movement was requested, check if tile is valid
     if (mov != Vec2(0,0)) {
         Vec2 newPos = mov + this->pos;
         if (Tile* curr = map->getTile(newPos); curr != nullptr)  {
             switch(curr->getOccupant()) {
+                // If it is empty, move there
                 case Occupant::empty:
                     target = newPos;
                     type = ActionType::move;
                     break;
+
+                // If there is an entity, attack it
                 case Occupant::entity:
                     target = newPos;
                     type = ActionType::attack;
                     break;
+
+                // If there is a wall, this isn't a valid choice
                 case Occupant::wall:
                     target = newPos;
                     type = ActionType::none;
@@ -63,6 +75,7 @@ Action PlayerEntity::takeTurn(Map* map) {
     return Action{cost, tick, target, type, shared_from_this()};
 }
 
+// Print out the player's inventory
 void PlayerEntity::checkInventory() {
     std::cout << "INVENTORY: " << std::endl;
     for(auto i : this->inventory.items) {
@@ -70,8 +83,22 @@ void PlayerEntity::checkInventory() {
     }
 }
 
-void PlayerEntity::addInventory() {
-    std::shared_ptr<Item> i = std::make_shared<Item>(Item());
-    this->inventory.pickUp(i);
+// Add item from current tile to inventory
+void PlayerEntity::addInventory(Map* map) {
+    Tile* currTile = map->getTile(this->pos);
+    if (!currTile->items.empty()) {
+        std::shared_ptr<Item> item = currTile->items.back();
+        currTile->items.pop_back();
+        this->inventory.store(item);
+    }
+    else {
+        std::cout << "No Items" << std::endl;
+    }
+}
+
+// Drop item onto the ground
+void PlayerEntity::dropItem(Map* map) {
+    Tile* currTile = map->getTile(this->pos);
+    currTile->items.push_back(this->inventory.drop(0));
 }
 

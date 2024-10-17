@@ -1,6 +1,8 @@
 #ifndef ITEM_HPP_
 #define ITEM_HPP_
 
+#include "../utils/disp.hpp"
+
 #include <string>
 
 enum ItemType {
@@ -11,9 +13,13 @@ enum ItemType {
 
 class Item {
     public:
-        Item(ItemType type = ItemType::trash, std::string name = "trash Item");
-        ItemType type;
+        Item(Disp disp = Disp{'%', PURPLE}, ItemType type = ItemType::trash, std::string name = "trash Item");
+
         std::string name;
+        ItemType type;
+        Disp disp;
+
+        // TODO: Implement this
         void use();
 };
 

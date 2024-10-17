@@ -1,15 +1,16 @@
 #include "tile.hpp"
 
-Tile::Tile(bool walkable, char disp, Color color) {
+Tile::Tile(Disp disp, bool walkable) {
     this->walkable = walkable;
-    this->disp.dispChar = disp;
-    this->disp.color = color;
+    this->disp = disp;
 }
 
+// TODO: This is probably obsolete due to getOccupant
 bool Tile::isOpen() {
     return walkable && (entity == nullptr);
 }
 
+// Get current occupant of a tile
 Occupant Tile::getOccupant() {
     if (this->entity != nullptr) {
         return Occupant::entity;
@@ -20,8 +21,4 @@ Occupant Tile::getOccupant() {
     else {
         return Occupant::empty;
     }
-}
-
-std::vector<std::shared_ptr<Item>> Tile::getItems() {
-    return this->items;
 }

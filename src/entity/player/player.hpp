@@ -6,12 +6,16 @@
 
 class PlayerEntity: public Entity {
     public:
-        PlayerEntity(Color color = GREEN, Vec2 pos = Vec2(0,0), int health = 53, std::string name = "Player", char disp = '@');
+        // Constructor
+        PlayerEntity(Disp disp = Disp{'@', WHITE}, Vec2 pos = Vec2(0,0), int health = 53, std::string name = "Player");
 
+        // Take a turn
         Action takeTurn(Map* map) override;
 
+        // Inventory management
         void checkInventory();
-        void addInventory();
+        void addInventory(Map* map);
+        void dropItem(Map* map);
 
         Inventory inventory;
 };
