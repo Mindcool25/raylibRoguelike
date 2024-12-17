@@ -1,5 +1,7 @@
 #include "map.hpp"
+
 #include "raylib.h"
+
 #include <memory>
 
 Map::~Map() {

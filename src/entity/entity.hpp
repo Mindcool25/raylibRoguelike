@@ -1,12 +1,14 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
 
+#include <memory>
+#include <string>
+
 #include "raylib.h"
+
 #include "../utils/vec2.hpp"
 #include "../utils/action.hpp"
 #include "../inventory/inventory.hpp"
-#include <memory>
-#include <string>
 
 class Map;
 

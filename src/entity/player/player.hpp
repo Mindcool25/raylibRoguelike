@@ -1,4 +1,6 @@
 #include "../entity.hpp"
+
+#include "../../map/map.hpp"
 #include "../../utils/vec2.hpp"
 
 #ifndef PLAYER_HPP

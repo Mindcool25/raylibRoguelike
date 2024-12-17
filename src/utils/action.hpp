@@ -2,6 +2,7 @@
 #define ACTION_HPP_
 
 #include <memory>
+
 #include "vec2.hpp"
 
 class Entity;

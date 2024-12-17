@@ -1,5 +1,7 @@
 #include "entity.hpp"
+
 #include "raylib.h"
+
 #include "../tile/tile.hpp"
 #include "../map/map.hpp"
 

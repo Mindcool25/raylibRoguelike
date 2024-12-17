@@ -1,8 +1,6 @@
 #include "player.hpp"
 #include "raylib.h"
 
-#include "../../map/map.hpp"
-
 #include <iostream>
 
 // TODO: rewrite input to call a function rather than run code inline

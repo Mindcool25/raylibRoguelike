@@ -1,7 +1,8 @@
 #include "game.hpp"
-#include "raylib.h"
-#include <memory>
 
+#include "raylib.h"
+
+#include <memory>
 #include <iostream>
 
 Game::Game() {

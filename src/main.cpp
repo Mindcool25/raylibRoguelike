@@ -1,7 +1,5 @@
 #include "raylib.h"
-#include "map/map.hpp"
 #include "game/game.hpp"
-#include "utils/action.hpp"
 #include "utils/vec2.hpp"
 #include "entity/entity.hpp"
 #include "entity/player/player.hpp"
@@ -45,7 +43,7 @@ int main() {
     for (int i = 0; i < 5; i++) {
         Color entityColor = ColorFromHSV(GetRandomValue(0, 355), 100, 100);
         char entityChar = 'E';
-        std::shared_ptr<Entity> enemy = std::make_shared<Entity>(Entity(Disp{entityChar, entityColor}, Vec2(GetRandomValue(1, 20),GetRandomValue(1, 20)), 12));
+        std::shared_ptr<Entity> enemy = std::make_shared<Entity>(Entity(Disp{entityChar, entityColor}, Vec2(GetRandomValue(1, 20), GetRandomValue(1, 20)), 12));
         game.entities.push_back(enemy);
         game.map.setEntity(enemy);
         game.schedule.scheduleEntity(enemy, GetRandomValue(1, 30));

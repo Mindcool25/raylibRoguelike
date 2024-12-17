@@ -9,11 +9,11 @@
 #include "../map/map.hpp"
 #include "../entity/entity.hpp"
 #include "../scheduler/scheduler.hpp"
+
 /* Game
  * Manages game map, schedule, and entities as
  * well as rendering and running the game loop
  */
-
 class Game {
     public:
         Game();

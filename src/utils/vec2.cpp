@@ -1,4 +1,5 @@
 #include "vec2.hpp"
+
 #include <functional>
 
 // TODO: Add implicit Vec2 -> Vector2 type conversion
