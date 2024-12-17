@@ -53,7 +53,3 @@ void Scheduler::scheduleEntity(std::shared_ptr<Entity> e, int scheduleTick) {
     // Add it to the schedule
     this->schedule.insert({newAction.tick, std::make_shared<Action>(newAction)});
 }
-
-// TODO: probably can be removed
-void Scheduler::removeEntity(std::shared_ptr<Entity> e) {
-}

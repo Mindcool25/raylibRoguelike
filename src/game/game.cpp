@@ -42,7 +42,6 @@ void Game::runEntities() {
     // Remove entity from the tile, then remove it from the entites vector
     for (auto j : remove) {
         this->map.clearEntity(j->pos);
-        this->schedule.removeEntity(j);
         std::erase(this->entities, j);
     }
 }

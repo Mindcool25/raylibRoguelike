@@ -5,10 +5,6 @@ Tile::Tile(Disp disp, bool walkable) {
     this->disp = disp;
 }
 
-// TODO: This is probably obsolete due to getOccupant
-bool Tile::isOpen() {
-    return walkable && (entity == nullptr);
-}
 
 // Get current occupant of a tile
 Occupant Tile::getOccupant() {
