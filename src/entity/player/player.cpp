@@ -1,6 +1,5 @@
 #include "player.hpp"
 #include "raylib.h"
-
 #include <iostream>
 
 // TODO: rewrite input to call a function rather than run code inline
@@ -98,8 +97,8 @@ void PlayerEntity::addInventory(Map* map) {
 void PlayerEntity::dropItem(Map* map) {
     Tile* currTile = map->getTile(this->pos);
     std::shared_ptr<Item> item = this->inventory.drop(0);
-    std::cout << item->name << std::endl;
     if (item != nullptr) {
+        std::cout << item->name << std::endl;
         currTile->items.push_back(item);
     }
     else {
