@@ -99,6 +99,13 @@ void PlayerEntity::addInventory(Map* map) {
 // Drop item onto the ground
 void PlayerEntity::dropItem(Map* map) {
     Tile* currTile = map->getTile(this->pos);
-    currTile->items.push_back(this->inventory.drop(0));
+    std::shared_ptr<Item> item = this->inventory.drop(0);
+    std::cout << item->name << std::endl;
+    if (item != nullptr) {
+        currTile->items.push_back(item);
+    }
+    else {
+        std::cout << "No item :)" << std::endl;
+    }
 }
 

@@ -82,7 +82,6 @@ void Map::render(int tile_size, Font font) const {
         else if (!curr.items.empty()) {
             disp = curr.items.back()->disp;
         }
-
         // Otherwise just draw the tile
         else {
             disp = curr.disp;
