@@ -1,6 +1,7 @@
 #include "vec2.hpp"
 
 #include <functional>
+#include <bits/stdc++.h>
 
 // TODO: Add implicit Vec2 -> Vector2 type conversion
 
@@ -31,4 +32,8 @@ Vec2 operator+(Vec2 lhs, const Vec2& rhs) {
 Vec2::Vec2() {
     this->x = 0;
     this->y = 0;
+}
+
+Vec2 Vec2::randomVec(int min_x, int max_x, int min_y, int max_y) {
+    return Vec2(rand() % (max_x + 1 - min_x) + min_x, rand() % (max_y - min_y) + min_y);
 }

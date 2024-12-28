@@ -7,7 +7,7 @@
 
 Game::Game() {
     // Setting up initial variables
-    map = Map(Vec2(25, 25));
+    map = Map(Vec2(50, 50));
     schedule = Scheduler();
     entities = {};
 

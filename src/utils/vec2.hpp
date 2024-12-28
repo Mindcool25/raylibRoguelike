@@ -2,11 +2,14 @@
 #define VEC2_HPP
 
 #include <cstddef>
+#include <raylib.h>
 
 class Vec2 {
     public:
 
         Vec2();
+
+        static Vec2 randomVec(int min_x, int max_x, int min_y, int max_y);
 
         int x, y;
 

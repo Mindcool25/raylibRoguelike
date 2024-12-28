@@ -28,6 +28,8 @@ add_executable(
   src/utils/vec2.cpp
   src/entity/entity.cpp
   src/entity/enemy/enemy.cpp
+  src/map/generators/cave.cpp
+  src/map/generators/rooms.cpp
   src/scheduler/scheduler.cpp
   src/inventory/inventory.cpp
   src/entity/player/player.cpp

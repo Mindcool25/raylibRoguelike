@@ -25,9 +25,9 @@ class Map {
         void setFloor(Vec2 pos);
 
         void render(int tile_size, Font font) const;
+        std::unordered_map<Vec2, Tile, VecHash> tiles;
 
     protected:
-        std::unordered_map<Vec2, Tile, VecHash> tiles;
 };
 
 #endif

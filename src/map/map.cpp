@@ -4,14 +4,21 @@
 
 #include <memory>
 
+#include "generators/rooms.hpp"
+
 Map::~Map() {
 }
 
 Map::Map(Vec2 size) {
+    srand(time(0));
+    SetRandomSeed(rand());
     this->map_size = size;
+    //Cave::generate(this);
+    Rooms::generate(this, 30);
 
     // NOTE: this is where map gen will happen
     // This is just making a box, can do random walls
+    /*
     for (int i = 0; i < map_size.y; i++) {
         for (int j = 0; j < map_size.x; j ++) {
             if (i == 0 || i == map_size.y - 1) {
@@ -31,6 +38,8 @@ Map::Map(Vec2 size) {
             }
         }
     }
+    */
+
 }
 
 // Setting a given location to a wall

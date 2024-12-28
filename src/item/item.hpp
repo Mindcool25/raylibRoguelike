@@ -19,7 +19,6 @@ class Item {
         ItemType type;
         Disp disp;
 
-        // TODO: Implement this
         void use();
 };
 

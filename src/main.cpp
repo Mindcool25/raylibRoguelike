@@ -12,8 +12,8 @@
 // DONE: Reimplement attacking
 // DONE (kinda): Implement items, inventories
 // DONE: Change rendering to be done with ASCII rather than colored squares.
-// TODO: Refactor everything, standardize var names and import patterns.
-// TODO: Fully implement items
+// DONE: Refactor everything, standardize var names and import patterns.
+// DONE: Fully implement items
 
 void draw() {
     ClearBackground(BLACK);
@@ -35,11 +35,8 @@ int main() {
 
     player.reset();
 
-    std::shared_ptr<Item> item = std::make_shared<Item>(Item());
-    game.map.addItem(Vec2{5, 5}, item);
-    item.reset();
 
-
+    /*
     for (int i = 0; i < 5; i++) {
         Color entityColor = ColorFromHSV(GetRandomValue(0, 355), 100, 100);
         char entityChar = 'E';
@@ -48,6 +45,7 @@ int main() {
         game.map.setEntity(enemy);
         game.schedule.scheduleEntity(enemy, GetRandomValue(1, 30));
     }
+    */
 
     game.gameLoop();
 
